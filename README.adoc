@@ -1,0 +1,341 @@
+ifdef::env-github[]
+:imagesdir: images/
+endif::[]
+
+== Setup a layered architecture for your project
+
+== Introduction
+
+This tutorial describes how to setup a layered architecture for your project.
+Before answering the question *HOW* to do that, we should ask ourselves the question
+*WHY* we would do that! An important principle in general, but definitely also in
+Software Engineering is the KISS-principle: **K**eep **I**t **S**tupid and **S**imple. Things that
+are simple are less error prone, and can be easily understood by others as well.
+Making our architecture more complex is therefore only reasonable if it serves a
+purpose.
+
+== Our goals
+
+What do we want to achieve with a proper project architecture?
+
+* Separation of Concerns
+
++
+--
+Each part (component) of a software has an own and preferably single responsibility.
+Benefits: that component can be more easily re-used for that single responsibility and that part can be developed
+by an expert (e.g. user interface developers are different from so called back-end developers). Finally, the components
+can  be developed independent from each other, as long as the way they should communicate with each other is clearly defined.
+--
++
+
+* Testable code
+
++
+--
+Tests and test driven development make sure that what is developed is based on the defined requirements, and not
+more than that. The other way around, tests give a certain level of conficence that the implementation does what
+it should do. When software components use other services (Dependent-On-Components, DOC), we typically don't want to
+test the whole chain at once. We want to test that component (the System Under Test, SUT) in isolation. From test-
+perspective, we have to be able to replace the DOC's by something that the tester has completely in control. We want
+to test the component itself and its interaction with the DOC's, not the DOC's themselves.
+--
++
+
+
+* Re-usable code
+
++
+--
+One of the idea's of Object Oriented software development is the development of re-usable components. If you have
+well-tested re-usable components available, why re-inventing the wheel? Furthermore, re-usable code avoids duplication
+of code. You might know the *DRY* design principle **D**on't **R**epeat **Y**ourself. From the databases course, you must
+have learned that redundancy might lead to inconsistencies.
+--
++
+
+* Maintainable code
+
++
+--
+All the above mentioned goals have to do with software quality. Maintainable code is readable, testable, re-usable and
+also very important easily extendible. Software changes are risks; how can we minimize these risks? Because one thing is
+sure, software systems will change over time. But also here some relativity: don't use a sledgehammer to crack a nut.
+Maintainability becomes more important when software becomes bigger, more people are involved, the expected live-time
+is longer, and the number of expected changes and / or extensions becomes bigger.
+--
++
+
+
+== Our design starting points
+
+* A layered architecture that addresses the concerns:
+
+ ** Representing information and interact with the user in a *(G)UI-layer*
+ ** Modeling the real world, the business and its business rules in a *Business Logic Layer*
+ ** Storing data in a *Persistence Layer*
+
+* Program against interfaces, instead of implementations
+
++
+--
+It's often not necessary to know
+the implementation to be able to use it. Think about you driving a car. That's perfectly
+possible without knowing how it works, but by only knowing its interface (steering wheel, pedals, gear)
+and how to use that. Benefit is that you can drive other car implementations with that same
+interface without any problem. The implementation is interchangeable.
+--
++
+
+* Use factory classes to create instances
+
++
+--
+To create objects (instances) of a type (so always when using the *new* keyword), we need to know the
+actual concrete type (the implementation). That causes dependency. Try to do the creation of objects in
+separate classes, called factory classes.
+--
++
+
+Design principles are mostly focussed on avoiding dependency. But isn't that very logical? In
+real life, we also want to avoid dependency. Dependency causes complexity, independency gives
+freedom! When you have a job, you're married, have children, you have dependencies and
+responsibilities that restrict freedom. Why did UK leave the EU? Too much dependency can even
+cause that rules are set FOR you (monopoly)! Independency is therefore
+persuable. But is avoiding dependency always a good idea? It comes with a price (its own complexities)
+as well. Moral of the story? We have to find a balance between making things flexible but still simple.
+
+
+
+== Let's set it up
+
+*What's key? Our Business Logic of course!* The persistence layer is only a service that serves the
+Business Logic Layer by storing object data at any time, and retrieving these on request. From a
+business point of view not important. The (G)UI only enables end users to interact with the business
+logic. From that perspective it's only a passthrough and a messenger; relevant from a software system
+point of view, not from a business point of view. Assume that we want to write an application that is
+able to create, store and retrieve customers. We'll explain the setup step-by-step afterwards.
+
+* Create a NetBeans project.
+
++
+--
+Choose 'Java with Maven' and 'POM project' as project type. This Netbeans Project will be your overall
+application, let's call it AirlineInformationSystem (AIS). This AIS will be the parent of all your sub
+projects that we'll create on the fly. Within this project you can create so-called modules, which are
+*Maven Modules*. This comes with some benefits:
+
+* All sub projects (Maven modules) will have this project as parent and inherit general settings. Open the
+POM file of your AIS-project and set the sebi-pom as its parent-pom. All libraries that are accessible via
+the sebi-pom will from now be available in all future sub projects.
+* Your complete software including all its modules can now be build with one single Maven command, with
+additional benefit that Maven will take care of the proper build-order (in case of dependencies).
+* All your sub projects will be created in sub folders of this AIS-project, avoiding having projects defined
+in different locations.
+
+--
++
+
+* Business is key! Create a business logic module within the AIS-project.
++
+--
+Right-click the Modules folder and select 'Create new Module' and choose 'Java Application' as project type.
+A regular project is created. This project acts as *business logic layer*. What do we need in this layer? Yes,
+business classes (representing entity types from your domain model!) and classes to manage objects of these
+classes:
+
+* But tests first... Of course your business logic should be tested and we'll use a test-first approach.
+* A Customer class to represent a real world Customer.
+* A CustomerManager class that is able to create new Customer objects and to store (add) these somehow, for example
+in a field of type List. This way, the CustomerManager can deliver a list of all customers as well. So, the
+CustomerManager provides sevices to other classes. For this moment, it contains an in-memory database. That might
+be a bad idea later on, when we use a relational database to store our customer information, but it's fine for now.
+--
++
+
+image::AISClassDiagram1.svg[Class diagram after 1st step]
+
+* Time to interact! Create a GUI module.
+
++
+--
+Create a new module in your AIS-project, this time choose 'FXML JavaFX Maven Archetype (Gluon)' as your project type.
+This module will act as *Graphical User Interface (GUI) layer*. A ready-to-use JavaFX-application is generated.  Benefit
+of this type of JavaFX project is that the User Interface definition including all styling is in separate XML-files,
+specifically fxml-files in this case. The *User Interface Logic (No Business Logic!!!)* is in separate Controller classes.
+User Interface Logic reacts on events (like button clicks), communicates with the business logic and updates the GUI
+(e.g. shows resuls from the business logic, enables or disables GUI controls, is responsible for navigation to other
+windows etc). For those aware of the Model-View-Controller pattern, the fxml-files act as 'View', the controller classes
+as 'Controller' and the Business Logic layer as 'Model'.
+--
++
+
+image::AISClassDiagram2.svg[Class diagram after 2nd step]
+
+* Connect the GUI to the Business Logic.
+
++
+--
+Time to wire up things. How could we enable the GUI-module to communicate with the BusinessLogic layer? Or the other way around?
+Should they know each other? Normally, the GUI will trigger the interaction with the BusinessLogic. Therefore it should at least
+know how to talk to it, so knowing its interface. The BusinessLogic does not need to know anything about the GUI! It normally
+answers GUI questions in a Request-Response fashion. There could be multiple front-ends for the BusinessLogic (e.g. a JavaFX Front end,
+a web front end or even a console front end). Why would the Business Logic worry?!
+
+So, the GUI is a component that uses the BusinessLogic as a service, a Dependent-On-Component. But it shouldn't create
+this service itself! If it would do, the GUI would be tightly coupled. When we would do GUI testing, there is no way to
+test its interaction with the BusinessLogic without using the real implementation of that BusinessLogic. This real implementation
+might not be ready or stable (e.g. depending on actual database contents). The GUI should only talk to the BusinessLogic interface
+(let's call it the BusinessLogicAPI) and get an actual implementation injected.
+
+Final question, 'Who should inject the BusinessLogic implementation?' The businessLogic itself? No, we just learned that the
+BusinessLogic should be unaware of the presentation layer! We need another module in our AIS-project: an Assembler project that
+acts as starting point of our application and sets up all layers and connects them properly.
+
+So, what do we need to do?
+
+* Provide the BusinessLogic with an API.
+* Create an 'Assembler' module that sets up and connects our layers.
+* Inject the implementation of the BusinessLogic interface (API) in our GUI-layer.
+
+--
++
+
+* Define the BusinessLogicAPI interface.
+
++
+--
+The BusinessLogic module should define its interface. You can imagine that it, on request, returns a CustomerManager.
+For example a GUI could request a CustomerManager object to do its interaction with the BusinessLogic. Via the CustomerManager,
+the GUI gains access to the Customer type as well. This is fine, though layers should be careful to expose their private parts,
+concrete implementations. Three solutions are available in this case:
+
+* Make the private parts public; the GUI depends on the BusinessLogic anyway, so use the concrete types from the BusinessLogic.
+
+* Encapsulate the concrete implementations of the entity classes and their managers in a separate new module of your AIS-project.
+Let both the BusinessLogic-layer and the GUI-layer depend on this new module (called e.g. BusinessEntities).
+
+* Encapsulate abstract types (interfaces) of the entity classes and their managers in a separate new module of your AIS-project.
+Let both the BusinessLogic-layer and the GUI-layer depend on this new module. (called e.g. BusinessEntitiesAPI)
+
+The demo-implementation uses the latter approach; benefit is that the BusinessLogic-layer is the one and only place where actual
+objects of entity classes are created. It's therefore the one and only layer that needs knowledge of concrete business types.
+Later on, we'll see that this choice has some impact on the persistence layer. The first described approach will probably cause
+issues regarding cyclic dependencies at a later point in time, the second approach could be a very good starting point and might
+completely fit your needs. Therefore, start simple.
+--
++
+
+
+* Create the Assembler module.
+
++
+--
+Within your AIS-project, create a new 'Java Application' called Assembler. This is a very simple project that contains
+the main()-method. The starting point of your application. As mentioned, responsibility is to setup layers and to connect
+them. Somehow, the Assembler must get an implementation of the BusinessLogicAPI. Like before, the BusinessLogic should provide this,
+but should also be careful to expose this private part. Therefore, in the BusinessLogic layer, we create a new interface called
+BusinessLogicImplementationProvider. This interface with a static method 'getImplementation()' returns an object that
+is an implementation of the BusinessLogicAPI. Afterwards it creates an instance of the GUI app and passes the just retrieved
+BusinessLogicAPI object as parameter to it (dependency injection). The GUI construction must be changed in order to accept
+this parameter (see next step).
+--
++
+
+* Inject the BusinessLogicAPI object in the presentation layer.
+
++
+--
+This seems to be a fairly easy step. The JavaFX Application class can be constructed from the Assembler directly. There is
+a trap / pitfall here however. Although the Application class can be instantiated by ourselves, the Controller class
+behind each window is instantiated automatically by the FXMLLoader (the controller class is identified in the fxml-file);
+this can only be done automatically when the Controller class has a default constructor. This is, by default, the case.
+We need a parameterized constructor however, to be able to pass the BusinessLogicAPI implementation to the controller.
+What we need to do is to provide the FXMLLoader with a separate 'controller factory'. This controller factory can create
+an instance of a controller class with a non-default constructor. The FXMLLoader has a setControllerFactory(...) method.
+--
++
+
+image::AISClassDiagram3.svg[Class diagram after 3rd step]
+
+* Setup the persistence layer.
+
++
+--
+We currently have a working application with an in-memory database. What we need is a persistence layer that is able to store
+and retrieve data on a longer term as well. Different ways to do this could be chosen, like using a relational database, or
+simpy XML- or JSON files. Regardless of the storage type that is chosen, the BusinessLogic uses the persistence layer as a service.
+A Dependent-On-Component again! (compare to the GUI that depended on the BusinessLogic). But it shouldn't create
+this service itself! If it would do, the BusinessLogic would be tightly coupled. When we do testing, there is no way to
+test its interaction with the Persistence layer without using the real implementation of that Persistence layer. The BusinessLogic
+should only talk to the Persistence interface (let's call it the PersistenceAPI) and get an actual implementation injected. L'histoire
+se répète. The Persistence layer should act as service for the BusinessLogic exactly like how the BusinessLogic layer acted as service
+for the GUI-layer. The Assmbler can inject the PersistenceAPI implementation in the BusinessLogic. The persistence layer does not
+need to have any knowledge of the BusinessLogic layer. In the persistence project, we create the PersistenceAPI interface, a
+PersistenceAPIImpl class providing an implementation of this interface and a PersistenceImplementationProvider that can be used externally.
+
+Be careful, two details we should take care of:
+
+* The BusinessLogic layer now depends on the persistence layer (the BusinessLogic project has the Persistence project as a dependency).
+This is fine. However, since we decided that the creation of entity objects would only take place in the Business Logic Layer, the
+persistence layer is not able to do that itself. When it retrieves customer data from the database, it would like to pass Customer objects
+back to the BusinessLogic layer. The create these, the Persistence layer is dependent on the BusinessLogic as well. This a cyclic
+reference, which is problematic (a chicken-egg problem in the creation). Solution is that, in the PersistenceAPI we pass a CustomerManager
+object as parameter, in order to get a CustomerStorageService that can create CustomerObjects itself.
+
+* Since we have a persistence layer now, we should avoid having an in-memory database at the same time. This will cause issues,
+since it's difficult to keep your in-memory database always exactly in sync with your on-disk storage. Therefore remove the
+cache function from the CustomerManagerImpl class.
+
+--
++
+
+image::AISClassDiagram4.svg[Final class diagram]
+
+
+== Some remarks...
+
+* This architectural setup acts as a starting point, addressing some issues that you definitely
+will run into when you start setting up an architecture yourself. This example architecture is not completely
+optimized yet. You'll typically notice that the services offered by both the persistence layer as the business
+logic layer could be made more generic.
+
+* The ImplementationProvider interfaces in both the BusinessLogic and the Persistence layer could be provided with additional
+parameters to influence which specific implementation is returned. The demo implementation does not use this feature yet.
+
+* Newer java projects will use the Java Platform Module System (JPMS). This is recognizable when your project contains
+a <default package> containing a file called 'module-info.java'. JPMS will be discussed in the PRC2 lessons at a later point
+in time. For the moment, easiest solution is to drop the default package if it's present. If not, all projects should
+be JPMS modules and configured properly. In the demo implementation you can see a way how to do this.
+
+
+== Second Release (28fe6a9, GUI Test with mocked Business Logic, March 27)
+
+After the initial release from the 17th of March, we added an example how to use TestFX in this release. We show how Mockito can
+be used to mock the business logic. Because of properly separated layers, we can test (parts of) layers independent of other
+layers; we can test the GUI (SUT in this case) without being dependent on the business logic (DOC in this case), and we can test
+the business logic (SUT in this case) without being dependent on the persistence layer (DOC in this case). Just consider to apply
+this concept of GUI testing in your project.
+
+Warning for MacOS users: the GUI test execution only works properly if the application that initiates the GUI test (e.g. NetBeans
+or the command line if you start NetBeans from the command line) has authorization to 'control your computer'. Go to
+Settings / Security & Privacy / Accessibility to adapt the authorizations.
+
+
+== Third Release
+
+As mentioned already in the remarks above, the persistence layer could be setup in a more generic way. When you don't do that,
+you'll notice that there will be a lot of duplicated code (at least almost the same) in the different StorageService classes
+(e.g. CustomerStorageService, FlightStorageService etc.). First step is to move some code to a shared abstract super class, then
+you might want to make it more generic using Generic Types, and at some point you might consider using reflection to automatically
+get an objects' fields, their data types and their values (typical things you need to store and retrieve data from a database).
+Goal is to end up with less and well readable and well testable code. This is exactly the path we also followed in the development
+of the GenericMapper and GenericDAO projects from PRC2. It's not mandatory, but you might consider using these components in this
+project to make your life easier!
+
+After some retrospective, we concluded that the preferred approach on the entities is to use simple java objects,
+sometimes colloquially called POJOS (Plain Old Java Objects) instead of interfaces for all entity classes. This will simplify your
+implementation and you are compatible with the design of the genericmapper and genericdao projects from PRC2. Some refactoring is
+needed! (but don't worry, refactoring is often necessary: https://youtube.com/watch?v=vqEg37e4Mkw&feature=share[Martin Fowler on refactoring])
+
+Further details, see  the link:revisedarchitecture.adoc[revisedarchitecture]
