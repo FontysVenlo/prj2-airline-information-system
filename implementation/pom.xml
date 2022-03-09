@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>io.github.sebivenlo</groupId>
+        <artifactId>testeasypom</artifactId>
+        <version>4.0.2</version>
+        <relativePath/>
+    </parent>
+    <groupId>nl.fontys.sebivenlo</groupId>
+    <artifactId>airlineinformationsystem</artifactId>
+    <version>1.0-SNAPSHOT</version>
+    <packaging>pom</packaging>
+    <properties>
+        <maven.compiler.release>11</maven.compiler.release>
+        <java.release>11</java.release>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    </properties>
+    <modules>
+        <module>Assembler</module>
+        <module>GUI</module>
+        <module>BusinessLogic</module>        
+        <module>Persistence</module>
+        <module>BusinessEntities</module>
+    </modules>
+    <name>AirlineInformationSystem</name>
+</project>
