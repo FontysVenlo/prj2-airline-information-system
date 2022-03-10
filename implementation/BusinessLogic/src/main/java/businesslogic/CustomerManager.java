@@ -24,12 +24,8 @@ public class CustomerManager {
         this.customerStorageService = customerStorageService;
     }
 
-    public Optional<CustomerData> add(CustomerData customer) {
+    public CustomerData add(CustomerData customer) {
         return customerStorageService.add(customer);
-    }
-    
-    public CustomerData createCustomer(String firstName, String lastName, LocalDate birthDate) {
-        return new CustomerData(firstName, lastName, birthDate);
     }
     
 }

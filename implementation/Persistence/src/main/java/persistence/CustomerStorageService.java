@@ -17,7 +17,7 @@ public interface CustomerStorageService {
      * @return customer data if the operation was successful
      *  or empty optional if not successful
      */
-    Optional<CustomerData> add(CustomerData customer);
+    CustomerData add(CustomerData customer);
     
     /**
      * Retrieve all customers from the database

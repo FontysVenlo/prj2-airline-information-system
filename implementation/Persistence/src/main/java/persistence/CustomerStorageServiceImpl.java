@@ -12,9 +12,9 @@ import java.util.Optional;
 public class CustomerStorageServiceImpl implements CustomerStorageService {
 
     @Override
-    public Optional<CustomerData> add(CustomerData customer) {
+    public CustomerData add(CustomerData customer) {
         // Do the actual work to store the customer here
-        return Optional.of(customer);
+        return customer;
     }
 
     @Override
