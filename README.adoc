@@ -126,8 +126,33 @@ projects that we'll create on the fly. Within this project you can create so-cal
 *Maven Modules*. This comes with some benefits:
 
 * All sub projects (Maven modules) will have this project as parent and inherit general settings. Open the
-POM file of your AIS-project and set the sebi-pom as its parent-pom. All libraries that are accessible via
-the sebi-pom will from now be available in all future sub projects.
+POM file of your AIS-project and set the sebi-pom as its parent-pom; make sure your pom-file looks like the onde below. Since we still use Java 11, we have to overwrite some properties as well. All libraries that are accessible via the sebi-pom will from now be available in all future sub projects (sub modules).
+
+.pom-file in order to have sebi-pom as parent
+[source,java]
+----
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>io.github.sebivenlo</groupId>
+        <artifactId>testeasypom</artifactId>
+        <version>4.0.2</version>
+        <relativePath/>
+    </parent>
+    <groupId>nl.fontys.ais</groupId>
+    <artifactId>airlineinformationsystem</artifactId>
+    <version>1.0-SNAPSHOT</version>
+    <packaging>pom</packaging>
+    <name>AirlineInformationSystem</name>
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <maven.compiler.release>11</maven.compiler.release>
+        <java.release>11</java.release>
+    </properties>
+</project>
+----
+
 * Your complete software including all its modules can now be build with one single Maven command, with
 additional benefit that Maven will take care of the proper build-order (in case of dependencies).
 * All your sub projects will be created in sub folders of this AIS-project, avoiding having projects defined
@@ -164,7 +189,7 @@ This module will act as *Graphical User Interface (GUI) layer*. A ready-to-use J
 of this type of JavaFX project is that the User Interface definition including all styling is in separate XML-files,
 specifically fxml-files in this case. The *User Interface Logic (No Business Logic!!!)* is in separate Controller classes.
 User Interface Logic reacts on events (like button clicks), communicates with the business logic and updates the GUI
-(e.g. shows resuls from the business logic, enables or disables GUI controls, is responsible for navigation to other
+(e.g. shows results from the business logic, enables or disables GUI controls, is responsible for navigation to other
 windows etc). For those aware of the Model-View-Controller pattern, the fxml-files act as 'View', the controller classes
 as 'Controller' and the Business Logic layer as 'Model'.
 --
@@ -192,7 +217,7 @@ Final question, 'Who should inject the BusinessLogic implementation?' The busine
 BusinessLogic should be unaware of the presentation layer! We need another module in our AIS-project: an Assembler project that
 acts as starting point of our application and sets up all layers and connects them properly.
 
-So, what do we need to do?
+So, what do we need to do? (the steps will be explained in detail below)
 
 * Provide the BusinessLogic with an API.
 * Create an 'Assembler' module that sets up and connects our layers.
@@ -235,7 +260,7 @@ Within your AIS-project, create a new 'Java Application' called Assembler. This 
 the main()-method. The starting point of your application. As mentioned, responsibility is to setup layers and to connect
 them. Somehow, the Assembler must get an implementation of the BusinessLogicAPI. Like before, the BusinessLogic should provide this,
 but should also be careful to expose this private part. Therefore, in the BusinessLogic layer, we create a new interface called
-BusinessLogicImplementationProvider. This interface with a static method 'getImplementation()' returns an object that
+BusinessLogicFactory. This interface with a static method 'getImplementation()' returns an object that
 is an implementation of the BusinessLogicAPI. Afterwards it creates an instance of the GUI app and passes the just retrieved
 BusinessLogicAPI object as parameter to it (dependency injection). The GUI construction must be changed in order to accept
 this parameter (see next step).

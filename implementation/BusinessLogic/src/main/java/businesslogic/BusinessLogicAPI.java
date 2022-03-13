@@ -1,15 +1,12 @@
 package businesslogic;
 
 /**
- * Interface defining all the manager that are supported by the business logic
- * @author fontys
+ * API of the BusinessLogic layer.
+ * 
+ * @author Richard van den Ham / Martijn Bonajo
  */
 public interface BusinessLogicAPI {
     
-    /**
-     * Get the customer manager to manage customer
-     * @return CustomerManager
-     */
     CustomerManager getCustomerManager();
-            
+    
 }

@@ -1,7 +1,4 @@
-module persistence {
-    
-    requires transitive businessentities;
-    
+module persistence_module { 
+    requires datarecords_module;
     exports persistence;
-    
 }

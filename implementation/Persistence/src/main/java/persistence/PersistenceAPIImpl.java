@@ -1,16 +1,16 @@
 package persistence;
 
 /**
- *
- * @author m.bonajo@fontys.nl
+ * Actual creator of storage services.
+ * @author Richard van den Ham / Martijn Bonajo
  */
-class PersistenceAPIImpl implements PersistenceAPIProvider {
-    
-    // Make sure to have or establish a connection to the database
+public class PersistenceAPIImpl implements PersistenceAPI{
 
     @Override
-    public CustomerStorageService getCustomerStorage() {
+    public CustomerStorageService getCustomerStorageService() {
         return new CustomerStorageServiceImpl();
     }
+    
+    
     
 }

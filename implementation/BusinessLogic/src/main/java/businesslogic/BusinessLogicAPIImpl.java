@@ -3,29 +3,21 @@ package businesslogic;
 import persistence.PersistenceAPI;
 
 /**
- * Implementation of the CustomerManagerAPI
+ * Actual business logic implementation.
  * 
- * @author m.bonajo@fontys.nl
+ * @author Richard van den Ham / Martijn Bonajo
  */
-class BusinessLogicAPIImpl implements BusinessLogicAPIProvider {
-   
-    private final PersistenceAPI persistenceAPI;
+class BusinessLogicAPIImpl implements BusinessLogicAPI {
 
-    /**
-     * Create new BusinessLogicAPI to retrieve supported managers
-     * 
-     * @param persistenceAPI the persistenceAPI needed to let managers
-     * interact with the persistence layer
-     */
-    public BusinessLogicAPIImpl(PersistenceAPI persistenceAPI) {
+    final PersistenceAPI persistenceAPI;
+
+    BusinessLogicAPIImpl(PersistenceAPI persistenceAPI) {
         this.persistenceAPI = persistenceAPI;
     }
-
+    
     @Override
     public CustomerManager getCustomerManager() {
-        return new CustomerManager(persistenceAPI.getCustomerStorage());
+        return new CustomerManager(persistenceAPI.getCustomerStorageService());
     }
-    
-    
     
 }

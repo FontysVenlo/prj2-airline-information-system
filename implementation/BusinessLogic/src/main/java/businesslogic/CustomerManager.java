@@ -1,31 +1,25 @@
 package businesslogic;
 
-import businessentities.CustomerData;
-import java.time.LocalDate;
-import java.util.Optional;
+import datarecords.CustomerData;
 import persistence.CustomerStorageService;
 
 /**
- * Manager to handle all interaction with customer data
+ * Manages customers in the business logic.
+ * Linking pin between GUI and persistence. Connected to customerStorageService 
+ * in order to retrieve customers and to persist changes.
  * 
- * @author m.bonajo@fontys.nl
+ * @author Richard van den Ham / Martijn Bonajo
  */
 public class CustomerManager {
     
     private final CustomerStorageService customerStorageService;
 
-    /**
-     * Create new customer manager to handle customer data
-     * 
-     * @param customerStorageService the storage service needed to interact
-     * with the persistence layer
-     */
-    public CustomerManager(CustomerStorageService customerStorageService) {
+    public CustomerManager( CustomerStorageService customerStorageService ) {
         this.customerStorageService = customerStorageService;
     }
-
-    public CustomerData add(CustomerData customer) {
-        return customerStorageService.add(customer);
+    
+    public CustomerData add( CustomerData customerData ){
+        return customerStorageService.add(customerData);
     }
     
 }

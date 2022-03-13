@@ -1,29 +1,14 @@
 package persistence;
 
-import businessentities.CustomerData;
+import datarecords.CustomerData;
 import java.util.List;
-import java.util.Optional;
 
 /**
- * Storage service for customer data
- * 
- * @author m.bonajo@fontys.nl
+ * Interface that describes all services offered by the CustomerStorageService.
+ * @author Richard van den Ham / Martijn Bonajo
  */
 public interface CustomerStorageService {
     
-    /**
-     * Try to store a customer in the database
-     * @param customer the data of the customer
-     * @return customer data if the operation was successful
-     *  or empty optional if not successful
-     */
-    CustomerData add(CustomerData customer);
-    
-    /**
-     * Retrieve all customers from the database
-     * @return List of all customers in the database
-     *  or empty list when no customers present
-     */
+    CustomerData add( CustomerData customerData);
     List<CustomerData> getAll();
-    
 }

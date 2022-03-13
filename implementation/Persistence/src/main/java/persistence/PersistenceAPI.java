@@ -1,17 +1,26 @@
 package persistence;
 
 /**
- * Persistence API that gives access to all different storage providers
- * 
- * @author m.bonajo@fontys.nl
+ *
+ * @author Richard van den Ham / Martijn Bonajo
  */
 public interface PersistenceAPI {
-    
+
     /**
-     * Get the customer storage provider
-     * 
-     * @return CustomerStorageService
+     * Get CustomerStorageService. Provides a storage object that knows how to
+     * store and retrieve customers. Implemented by a default method, to enable
+     * creation of customized PersistenceFacade implementations with limited
+     * services, for test purposes.
+     *
+     * @return CustomerStorageService object that knows how to store and
+     * retrieve customers.
      */
-    CustomerStorageService getCustomerStorage();
-    
+    default CustomerStorageService getCustomerStorageService() {
+        return null;
+    }
+
+    // This interface can be extended with all services that need to be made
+    // available to the business logic, e.g. to store Products:
+    // 
+    // ProductStorageService getProductStorageService( );
 }

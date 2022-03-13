@@ -2,14 +2,13 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <parent>
-        <groupId>nl.fontys.sebivenlo</groupId>
+        <groupId>nl.fontys.ais</groupId>
         <artifactId>airlineinformationsystem</artifactId>
         <version>1.0-SNAPSHOT</version>
-        <relativePath>..</relativePath>
     </parent>
-    <groupId>nl.fontys.sebivenlo.airlineinformationsystem</groupId>
-    <artifactId>businessentities</artifactId>
-    <version>1.0-SNAPSHOT</version>
-    <packaging>jar</packaging>
-    <name>BusinessEntities</name>
+    <groupId>datarecords</groupId>
+    <artifactId>DataRecords</artifactId>
+    <properties>
+        <exec.mainClass>datarecords.DataRecords</exec.mainClass>
+    </properties>
 </project>

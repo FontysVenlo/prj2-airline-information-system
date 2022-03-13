@@ -1,5 +1,0 @@
-module businessentities {
-    
-    exports businessentities;
-    
-}
