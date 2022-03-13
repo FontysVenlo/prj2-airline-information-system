@@ -2,7 +2,7 @@ package persistence;
 
 /**
  *
- * @author Richard van den Ham / Martijn Bonajo
+ * @author Informatics Fontys Venlo
  */
 public interface PersistenceAPI {
 

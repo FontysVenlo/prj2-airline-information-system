@@ -7,9 +7,9 @@ import javafx.fxml.FXML;
 /**
  * Just for demo purposes, Controller of other view (primary.fxml).
  * 
- * @author Richard van den Ham / Martijn Bonajo
+ * @author Informatics Fontys Venlo
  */
-public class PrimaryController {
+class PrimaryController {
     
     private final Supplier<SceneManager> sceneManagerSupplier;
 

@@ -22,9 +22,9 @@ import javafx.util.Callback;
 /**
  * Responsible for loading scenes (from fxml) and switching between scenes.
  * 
- * @author Richard van den Ham / Martijn Bonajo
+ * @author Informatics Fontys Venlo
  */
-public class SceneManager {
+class SceneManager {
 
     private final Scene scene;
     private final Callback<Class<?>, Object> controllerFactory;

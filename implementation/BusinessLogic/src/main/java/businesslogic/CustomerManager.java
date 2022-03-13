@@ -8,7 +8,7 @@ import persistence.CustomerStorageService;
  * Linking pin between GUI and persistence. Connected to customerStorageService 
  * in order to retrieve customers and to persist changes.
  * 
- * @author Richard van den Ham / Martijn Bonajo
+ * @author Informatics Fontys Venlo
  */
 public class CustomerManager {
     

@@ -8,9 +8,9 @@ import java.util.List;
  * the database. At the moment only returns dummy object with an id that is set.
  * Normally it will connect to a database and do all the handling.
  * 
- * @author Richard van den Ham / Martijn Bonajo
+ * @author Informatics Fontys Venlo
  */
-public class CustomerStorageServiceImpl implements CustomerStorageService {
+class CustomerStorageServiceImpl implements CustomerStorageService {
 
     @Override
     public CustomerData add(CustomerData customerData) {

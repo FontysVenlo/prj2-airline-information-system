@@ -5,7 +5,7 @@ import persistence.PersistenceAPI;
 /**
  * Actual business logic implementation.
  * 
- * @author Richard van den Ham / Martijn Bonajo
+ * @author Informatics Fontys Venlo
  */
 class BusinessLogicAPIImpl implements BusinessLogicAPI {
 

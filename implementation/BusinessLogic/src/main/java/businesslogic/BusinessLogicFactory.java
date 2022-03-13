@@ -5,7 +5,7 @@ import persistence.PersistenceAPI;
 /**
  * Factory to provide BusinessLogicAPI implementation.
  * 
- * @author Richard van den Ham / Martijn Bonajo
+ * @author Informatics Fontys Venlo
  */
 public interface BusinessLogicFactory {
     

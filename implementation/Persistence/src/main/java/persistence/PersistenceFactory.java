@@ -2,7 +2,7 @@ package persistence;
 
 /**
  * Factory to provide PersistenceAPI implementation.
- * @author Richard van den Ham / Martijn Bonajo
+ * @author Informatics Fontys Venlo
  */
 public interface PersistenceFactory {
     

@@ -5,7 +5,7 @@ import java.util.List;
 
 /**
  * Interface that describes all services offered by the CustomerStorageService.
- * @author Richard van den Ham / Martijn Bonajo
+ * @author Informatics Fontys Venlo
  */
 public interface CustomerStorageService {
     

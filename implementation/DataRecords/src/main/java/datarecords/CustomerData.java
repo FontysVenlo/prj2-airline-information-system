@@ -11,7 +11,7 @@ import java.time.LocalDate;
  * for all fields, and NO SETTERS! Typically this class also contains a toString() 
  * method and if necessary equals() and hashCode().
  * 
- * @author Richard van den Ham / Martijn Bonajo
+ * @author Informatics Fontys Venlo
  */
 public class CustomerData {
     

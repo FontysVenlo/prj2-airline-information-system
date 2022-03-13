@@ -8,7 +8,7 @@ import persistence.PersistenceFactory;
 
 /**
  * Assembler to setup layers and start the GUI.
- * @author Richard van den Ham / Martijn Bonajo
+ * @author Informatics Fontys Venlo
  */
 public class Assembler {
 

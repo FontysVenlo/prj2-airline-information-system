@@ -12,9 +12,9 @@ import javafx.scene.control.Label;
 /**
  * Just for demo purposes, Controller of other view (secondary.fxml).
  * 
- * @author Richard van den Ham / Martijn Bonajo
+ * @author Informatics Fontys Venlo
  */
-public class SecondaryController implements Initializable{
+class SecondaryController implements Initializable{
     
     @FXML
     private Button secondaryButton;

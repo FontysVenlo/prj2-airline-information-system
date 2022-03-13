@@ -2,9 +2,9 @@ package persistence;
 
 /**
  * Actual creator of storage services.
- * @author Richard van den Ham / Martijn Bonajo
+ * @author Informatics Fontys Venlo
  */
-public class PersistenceAPIImpl implements PersistenceAPI{
+class PersistenceAPIImpl implements PersistenceAPI{
 
     @Override
     public CustomerStorageService getCustomerStorageService() {

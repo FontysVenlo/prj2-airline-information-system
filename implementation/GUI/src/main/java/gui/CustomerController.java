@@ -20,9 +20,9 @@ import javafx.scene.control.Label;
  * to do the real work. Furthermore the controller will trigger navigation
  * and update the GUI.
  *
- * @author Richard van den Ham / Martijn Bonajo
+ * @author Informatics Fontys Venlo
  */
-public class CustomerController implements Initializable {
+class CustomerController implements Initializable {
 
     @FXML
     private TextField firstName;

@@ -5,7 +5,7 @@ import datarecords.CustomerData;
 /**
  * Wrapper class that contains CustomerData and Customer Business Logic.
  * 
- * @author Richard van den Ham / Martijn Bonajo
+ * @author Informatics Fontys Venlo
  */
 public class Customer {
     

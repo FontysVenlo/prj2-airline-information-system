@@ -23,9 +23,9 @@ import javafx.fxml.Initializable;
 /**
  * FXML Controller class
  *
- * @author Richard van den Ham / Martijn Bonajo
+ * @author Informatics Fontys Venlo
  */
-public class ErrorController implements Initializable {
+class ErrorController implements Initializable {
 
     private final Supplier<SceneManager> sceneManagerSupplier;
 

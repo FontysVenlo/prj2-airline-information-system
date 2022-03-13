@@ -3,7 +3,7 @@ package businesslogic;
 /**
  * API of the BusinessLogic layer.
  * 
- * @author Richard van den Ham / Martijn Bonajo
+ * @author Informatics Fontys Venlo
  */
 public interface BusinessLogicAPI {
     

@@ -18,7 +18,7 @@ import javafx.util.Callback;
  * slightly adapted compared to a default generated JavaFX app. See documentation 
  * above show() method.
  * 
- * @author Richard van den Ham / Martijn Bonajo
+ * @author Informatics Fontys Venlo
  */
 public class GUIApp extends Application {
 
