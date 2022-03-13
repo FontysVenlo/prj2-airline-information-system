@@ -30,6 +30,24 @@
             <artifactId>BusinessLogic</artifactId>
             <version>1.0-SNAPSHOT</version>
         </dependency>
+               <dependency>
+            <groupId>org.testfx</groupId>
+            <artifactId>testfx-junit5</artifactId>
+            <version>4.0.15-alpha</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.testfx</groupId>
+            <artifactId>testfx-junit</artifactId>
+            <version>4.0.15-alpha</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.testfx</groupId>
+            <artifactId>testfx-core</artifactId>
+            <version>4.0.15-alpha</version>
+            <scope>test</scope>
+        </dependency>
     </dependencies>
     <build>
         <plugins>
@@ -41,6 +59,22 @@
                     <release>11</release>
                 </configuration>
             </plugin>
+           <plugin>
+                <artifactId>maven-surefire-plugin</artifactId> 
+                <configuration>
+                    <!-- add add-opens lines for **ALL** packages in your module that are tested.
+                        For testing it is fine to open your packages for the whole world, which includes
+                        e.g. junit, assertj, mockito, and jacoco, to name a few.
+                        Also leave ${argLine} because it is set/used by the coverage plugin.
+                    -->
+                    <argLine> 
+                        ${argLine}
+                        --add-opens gui_module/gui=ALL-UNNAMED 
+                        --add-opens javafx.graphics/com.sun.javafx.application.ParametersImpl=ALL-UNNAMED
+                        --add-exports javafx.graphics/com.sun.javafx.application=ALL-UNNAMED
+                    </argLine>
+                </configuration>
+            </plugin>            
             <plugin>
                 <groupId>org.openjfx</groupId>
                 <artifactId>javafx-maven-plugin</artifactId>
