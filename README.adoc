@@ -187,13 +187,14 @@ image::AISClassDiagram1.svg[Class diagram after 1st step]
 
 * Time to interact! Create a GUI module.
 
++
+--
+
 [TIP]
 ====
 Whenever you get issues during this project with your environment, most likely it will be related to JavaFX. In order to avoid frustration, make sure that you can create, build and execute a HelloWorld JavaFX application outside of this project context. In a temporary directory, create a new NetBeans project, select 'Java with Maven' and 'FXML JavaFX Maven Archetype (Gluon)'. You'll get a HelloWorld application out of the box. Make sure that this application builds and runs without problems, before continuing the steps below. Also make sure that you've setup SceneBuilder properly and integrated into NetBeans (Set Scene Builder Home under Preferences/Java/JavaFX).
 ====
 
-+
---
 Create a new module in your AIS-project, this time choose 'FXML JavaFX Maven Archetype (Gluon)' as your project type.
 This module will act as *Graphical User Interface (GUI) layer*. A ready-to-use JavaFX-application is generated.  Benefit
 of this type of JavaFX project is that the User Interface definition including all styling is in separate XML-files,
@@ -254,7 +255,7 @@ Let both the BusinessLogic-layer and the GUI-layer depend on this new module (ca
 Let both the BusinessLogic-layer and the GUI-layer depend on this new module. (called e.g. BusinessEntitiesAPI) Benefit is that the BusinessLogic-layer is the one and only place where actual
 objects of entity classes are created. It's therefore the one and only layer that needs knowledge of concrete business types.
 
-The demo-implementation uses the second approach (DataRecords). DataRecords are classes that represent immutable data carrier objects that are available in all layers of your application. Have a look at the CustomerData class and the Customer class in the demo application.
+The demo-implementation uses the second approach (DataRecords). DataRecords are classes that represent immutable data carrier objects that are available in all layers of your application. Have a look at the CustomerData class and the Customer class in the demo application, especially the JavaDoc.
 
 The first described approach will probably cause
 issues regarding cyclic dependencies at a later point in time, the second approach is a very good starting point and might
