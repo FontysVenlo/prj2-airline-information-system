@@ -47,7 +47,6 @@ class CustomerController implements Initializable {
 
     @FXML
     private void toSecondary() {
-        //sceneManagerSupplier.get().getScene().getWindow().setUserData("Richard");
         Consumer<SecondaryController> consumer
                 = (c) -> c.setPreviousView("Customer");
         sceneManagerSupplier.get().changeScene("secondary", consumer);
