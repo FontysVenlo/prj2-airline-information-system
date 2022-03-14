@@ -9,7 +9,7 @@
    <children>
       <Label layoutX="58.0" layoutY="68.0" text="First name" />
       <Label layoutX="58.0" layoutY="106.0" prefHeight="17.0" prefWidth="57.0" text="Last name" />
-      <Label layoutX="58.0" layoutY="147.0" text="Date of Birth" />
+      <Label layoutX="58.0" layoutY="147.0" text="Date of Birth (yyyy-mm-dd)" />
       <TextField fx:id="firstName" layoutX="147.0" layoutY="64.0" />
       <TextField fx:id="lastName" layoutX="147.0" layoutY="102.0" />
       <TextField fx:id="dob" layoutX="147.0" layoutY="143.0" />
