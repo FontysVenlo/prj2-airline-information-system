@@ -10,9 +10,9 @@
       <Label layoutX="58.0" layoutY="68.0" text="First name" />
       <Label layoutX="58.0" layoutY="106.0" prefHeight="17.0" prefWidth="57.0" text="Last name" />
       <Label layoutX="58.0" layoutY="147.0" text="Date of Birth (yyyy-mm-dd)" />
-      <TextField fx:id="firstName" layoutX="147.0" layoutY="64.0" />
-      <TextField fx:id="lastName" layoutX="147.0" layoutY="102.0" />
-      <TextField fx:id="dob" layoutX="147.0" layoutY="143.0" />
+      <TextField fx:id="firstName" layoutX="220.0" layoutY="64.0" />
+      <TextField fx:id="lastName" layoutX="220.0" layoutY="102.0" />
+      <TextField fx:id="dob" layoutX="220.0" layoutY="143.0" />
       <Button fx:id="saveButton" layoutX="147.0" layoutY="200.0" mnemonicParsing="false" onAction="#storeCustomer" prefHeight="26.0" prefWidth="160.0" text="Save Customer" />
       <Button fx:id="toSecondaryButton" layoutX="374.0" layoutY="31.0" mnemonicParsing="false" onAction="#toSecondary" text="Switch to secondary..." />
       <Label fx:id="result" layoutX="58.0" layoutY="279.0" prefHeight="69.0" prefWidth="515.0" text="Result" wrapText="true" />

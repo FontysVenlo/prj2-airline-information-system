@@ -1,10 +1,7 @@
 package gui;
 
-import java.net.URL;
-import java.util.ResourceBundle;
 import java.util.function.Supplier;
 import javafx.fxml.FXML;
-import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 
@@ -14,7 +11,7 @@ import javafx.scene.control.Label;
  * 
  * @author Informatics Fontys Venlo
  */
-class SecondaryController implements Initializable{
+class SecondaryController {
     
     @FXML
     private Button secondaryButton;
@@ -34,14 +31,6 @@ class SecondaryController implements Initializable{
     }
     
     public void setPreviousView(String view){
-        //prevLabel.setText(view);
-        System.out.println("VIEW IS " + view);
+        prevLabel.setText(view);
     }    
-
-    @Override
-    public void initialize(URL url, ResourceBundle rb) {
-        System.out.println("INITIALIZED!!!");
-        //String prev = (String)sceneManagerSupplier.get().getScene().getWindow().getUserData();
-        //prevLabel.setText(prev);
-    }
 }
