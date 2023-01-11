@@ -33,7 +33,7 @@ public class GUIApp extends Application {
             case "gui.CustomerController":
                 return new CustomerController(this::getSceneManager, businessLogicAPI.getCustomerManager());
             case "gui.PrimaryController":
-                return new SecondaryController(this::getSceneManager);
+                return new PrimaryController(this::getSceneManager);
             case "gui.SecondaryController":
                 return new SecondaryController(this::getSceneManager);
             case "gui.ErrorController":
