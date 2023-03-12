@@ -279,7 +279,7 @@ bg=green</panel_attributes>
       <h>40</h>
     </coordinates>
     <panel_attributes>&lt;&lt;interface&gt;&gt;
-BusinessLogicImplementationProvider
+BusinessLogicFactory
 bg=green</panel_attributes>
     <additional_attributes/>
   </element>
