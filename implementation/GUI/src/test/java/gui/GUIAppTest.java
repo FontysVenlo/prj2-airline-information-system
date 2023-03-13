@@ -75,9 +75,9 @@
 //        verify(customerManager).add(customerCaptor.capture());
 //
 //        assertSoftly(softly -> {
-//            softly.assertThat(customerCaptor.getValue().getFirstName()).isEqualTo("Elon");
-//            softly.assertThat(customerCaptor.getValue().getLastName()).isEqualTo("Musk");
-//            softly.assertThat(customerCaptor.getValue().getDob()).isEqualTo(LocalDate.of(1971, Month.JUNE, 28));
+//            softly.assertThat(customerCaptor.getValue().firstName()).isEqualTo("Elon");
+//            softly.assertThat(customerCaptor.getValue().lastName()).isEqualTo("Musk");
+//            softly.assertThat(customerCaptor.getValue().dob()).isEqualTo(LocalDate.of(1971, Month.JUNE, 28));
 //        });
 //    }
 //

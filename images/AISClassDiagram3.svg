@@ -120,8 +120,8 @@
     ><rect fill="none" x="0.5" width="308.5" height="38.5" y="0.5" clip-path="url(#clipPath3)"
       /><text x="117" font-size="14px" y="17.8174" clip-path="url(#clipPath3)" font-family="sans-serif" stroke="none" xml:space="preserve"
       >«interface»</text
-      ><text x="26" font-size="14px" y="33.6348" clip-path="url(#clipPath3)" font-family="sans-serif" stroke="none" xml:space="preserve"
-      >BusinessLogicImplementationProvider</text
+      ><text x="83" font-size="14px" y="33.6348" clip-path="url(#clipPath3)" font-family="sans-serif" stroke="none" xml:space="preserve"
+      >BusinessLogicFactory</text
     ></g
     ><g fill="rgb(255,255,255)" fill-opacity="0" transform="translate(40,190)" stroke-opacity="0" stroke="rgb(255,255,255)"
     ><rect x="0.5" width="98.5" height="28.5" y="0.5" clip-path="url(#clipPath4)" stroke="none"

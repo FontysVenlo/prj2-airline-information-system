@@ -2,17 +2,15 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <parent>
-    <artifactId>airlineinformationsystem</artifactId>
-    <groupId>nl.fontys.ais</groupId>
-    <version>1.0-SNAPSHOT</version>
-  </parent>
+        <artifactId>airlineinformationsystem</artifactId>
+        <groupId>io.github.fontysvenlo.ais</groupId>
+        <version>1.0-SNAPSHOT</version>
+    </parent>
     <groupId>nl.fontys.ais</groupId>
     <artifactId>GUI</artifactId>
     <version>1.0-SNAPSHOT</version>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <maven.compiler.source>11</maven.compiler.source>
-        <maven.compiler.target>11</maven.compiler.target>
     </properties>
     <dependencies>
         <dependency>
@@ -30,7 +28,7 @@
             <artifactId>BusinessLogic</artifactId>
             <version>1.0-SNAPSHOT</version>
         </dependency>
-               <dependency>
+        <dependency>
             <groupId>org.testfx</groupId>
             <artifactId>testfx-junit5</artifactId>
             <version>4.0.15-alpha</version>
@@ -52,14 +50,6 @@
     <build>
         <plugins>
             <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-compiler-plugin</artifactId>
-                <version>3.8.0</version>
-                <configuration>
-                    <release>11</release>
-                </configuration>
-            </plugin>
-           <plugin>
                 <artifactId>maven-surefire-plugin</artifactId> 
                 <configuration>
                     <!-- add add-opens lines for **ALL** packages in your module that are tested.
@@ -112,11 +102,11 @@
                         <id>ide-profile</id>
                         <configuration>
                             <options>
-				<option>${profiler.jvmargs.arg1}</option>
-				<option>${profiler.jvmargs.arg2}</option>
-				<option>${profiler.jvmargs.arg3}</option>
-				<option>${profiler.jvmargs.arg4}</option>
-				<option>${profiler.jvmargs.arg5}</option>
+                                <option>${profiler.jvmargs.arg1}</option>
+                                <option>${profiler.jvmargs.arg2}</option>
+                                <option>${profiler.jvmargs.arg3}</option>
+                                <option>${profiler.jvmargs.arg4}</option>
+                                <option>${profiler.jvmargs.arg5}</option>
                             </options>
                         </configuration>
                     </execution>
