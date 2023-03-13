@@ -34,3 +34,6 @@ hs_err_pid*
 .vscode
 .idea
 *.iml
+
+#Netbeans
+nbactions.xml
