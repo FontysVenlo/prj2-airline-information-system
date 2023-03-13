@@ -8,7 +8,4 @@
     </parent>
     <groupId>datarecords</groupId>
     <artifactId>DataRecords</artifactId>
-    <properties>
-        <exec.mainClass>datarecords.DataRecords</exec.mainClass>
-    </properties>
 </project>

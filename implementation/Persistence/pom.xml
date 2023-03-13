@@ -15,7 +15,4 @@
             <version>1.0-SNAPSHOT</version>
         </dependency>
     </dependencies>
-    <properties>
-        <exec.mainClass>persistence.Persistence</exec.mainClass>
-    </properties>
 </project>
