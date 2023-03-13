@@ -35,7 +35,7 @@ can  be developed independent from each other, as long as the way they should co
 +
 --
 Tests and test driven development make sure that what is developed is based on the defined requirements, and not
-more than that. The other way around, tests give a certain level of conficence that the implementation does what
+more than that. The other way around, tests give a certain level of confidence that the implementation does what
 it should do. When software components use other services (Dependent-On-Components, DOC), we typically don't want to
 test the whole chain at once. We want to test that component (the System Under Test, SUT) in isolation. From test-
 perspective, we have to be able to replace the DOC's by something that the tester has completely in control. We want
@@ -267,7 +267,7 @@ but should also be careful to expose this private part. Therefore, in the Busine
 BusinessLogicFactory. This interface with a static method 'getImplementation()' returns an object that
 is an implementation of the BusinessLogicAPI. Afterwards it creates an instance of the GUI app and passes the just retrieved
 BusinessLogicAPI object as parameter to it (dependency injection). The GUI construction must be changed in order to accept
-this parameter (see next step). In the Assembler Module you have to add dependencies to both the BusinessLogic as well as the GUI project. Lateron, it will also need a dependency to the Persistence project.
+this parameter (see next step). In the Assembler Module you have to add dependencies to both the BusinessLogic as well as the GUI project. Later on, it will also need a dependency to the Persistence project.
 --
 +
 
@@ -300,13 +300,13 @@ image::AISClassDiagram3.svg[Class diagram after 3rd step]
 --
 We currently have a working application with an in-memory database. What we need is a persistence layer that is able to store
 and retrieve data on a longer term as well. Different ways to do this could be chosen, like using a relational database, or
-simpy XML- or JSON files. Regardless of the storage type that is chosen, the BusinessLogic uses the persistence layer as a service.
+simply XML- or JSON files. Regardless of the storage type that is chosen, the BusinessLogic uses the persistence layer as a service.
 A Dependent-On-Component again! (compare to the GUI that depended on the BusinessLogic). But it shouldn't create
 this service itself! If it would do, the BusinessLogic would be tightly coupled. When we do testing, there is no way to
 test its interaction with the Persistence layer without using the real implementation of that Persistence layer. The BusinessLogic
 should only talk to the Persistence interface (let's call it the PersistenceAPI) and get an actual implementation injected. L'histoire
 se répète. The Persistence layer should act as service for the BusinessLogic exactly like how the BusinessLogic layer acted as service
-for the GUI-layer. The Assmbler can inject the PersistenceAPI implementation in the BusinessLogic. The persistence layer does not
+for the GUI-layer. The Assembler can inject the PersistenceAPI implementation in the BusinessLogic. The persistence layer does not
 need to have any knowledge of the BusinessLogic layer. In the persistence project, we create the PersistenceAPI interface, a
 PersistenceAPIImpl class providing an implementation of this interface and a PersistenceFactory that can be used externally.
 
