@@ -3,7 +3,7 @@
     <modelVersion>4.0.0</modelVersion>
     <parent>
         <artifactId>airlineinformationsystem</artifactId>
-        <groupId>nl.fontys.ais</groupId>
+        <groupId>io.github.fontysvenlo.ais</groupId>
         <version>1.0-SNAPSHOT</version>
     </parent>
     <groupId>nl.fontys.ais</groupId>
