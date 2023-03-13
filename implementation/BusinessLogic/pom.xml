@@ -6,16 +6,16 @@
         <artifactId>airlineinformationsystem</artifactId>
         <version>1.0-SNAPSHOT</version>
     </parent>
-    <groupId>businesslogic</groupId>
+    <groupId>io.github.fontysvenlo.ais.businesslogic</groupId>
     <artifactId>BusinessLogic</artifactId>
     <dependencies>
         <dependency>
-            <groupId>persistence</groupId>
+            <groupId>io.github.fontysvenlo.ais.persistence</groupId>
             <artifactId>Persistence</artifactId>
             <version>1.0-SNAPSHOT</version>
         </dependency>
         <dependency>
-            <groupId>datarecords</groupId>
+            <groupId>io.github.fontysvenlo.ais.datarecords</groupId>
             <artifactId>DataRecords</artifactId>
             <version>1.0-SNAPSHOT</version>
         </dependency>

@@ -6,6 +6,6 @@
         <artifactId>airlineinformationsystem</artifactId>
         <version>1.0-SNAPSHOT</version>
     </parent>
-    <groupId>datarecords</groupId>
+    <groupId>io.github.fontysvenlo.ais.datarecords</groupId>
     <artifactId>DataRecords</artifactId>
 </project>

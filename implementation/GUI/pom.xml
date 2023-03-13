@@ -6,7 +6,7 @@
         <groupId>io.github.fontysvenlo.ais</groupId>
         <version>1.0-SNAPSHOT</version>
     </parent>
-    <groupId>nl.fontys.ais</groupId>
+    <groupId>io.github.fontysvenlo.ais.gui</groupId>
     <artifactId>GUI</artifactId>
     <version>1.0-SNAPSHOT</version>
     <properties>
@@ -24,7 +24,7 @@
             <version>13</version>
         </dependency>
         <dependency>
-            <groupId>businesslogic</groupId>
+            <groupId>io.github.fontysvenlo.ais.businesslogic</groupId>
             <artifactId>BusinessLogic</artifactId>
             <version>1.0-SNAPSHOT</version>
         </dependency>
