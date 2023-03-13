@@ -1,3 +1,4 @@
+:imagesdir: images/
 ifdef::env-github[]
 :imagesdir: images/
 endif::[]
@@ -48,7 +49,7 @@ to test the component itself and its interaction with the DOC's, not the DOC's t
 +
 --
 One of the idea's of Object Oriented software development is the development of re-usable components. If you have
-well-tested re-usable components available, why re-inventing the wheel? Furthermore, re-usable code avoids duplication
+well-tested re-usable components available, why reinvent the wheel? Furthermore, re-usable code avoids duplication
 of code. You might know the *DRY* design principle **D**on't **R**epeat **Y**ourself. From the databases course, you must
 have learned that redundancy might lead to inconsistencies.
 --
@@ -110,7 +111,7 @@ as well. Moral of the story? We have to find a balance between making things fle
 
 [TIP]
 ====
-With the demo application in this repository, you have received a (hopefully) working starting point for your project. HOWEVER... more important is that you are able to setup a project yourself as well. Therefore, the tutorial below describes the way to do it. *We higly recommend that each group member tries to setup a working project architecture her- or himself.* Afterwards, you can start together from scratch again, having gained relevant knowledge. The paragraphs below don't contain all the details; these can be looked up in the example implementation however. Okay, here we go...
+With the demo application in this repository, you have received a (hopefully) working starting point for your project. HOWEVER... more important is that you are able to setup a project yourself as well. Therefore, the tutorial below describes the way to do it. *We highly recommend that each group member tries to setup a working project architecture themselves.* Afterwards, you can start together from scratch again, having gained relevant knowledge. The paragraphs below don't contain all the details; these can be looked up in the example implementation however. Okay, here we go...
 ====
 
 *What's key? Our Business Logic of course!* The persistence layer is only a service that serves the
@@ -166,12 +167,11 @@ in different locations.
 +
 --
 Right-click the Modules folder and select 'Create new Module' and choose 'Java Application' as project type.
-A regular project is created. This project acts as *business logic layer*. What do we need in this layer? Yes,
-business classes (representing entity types from your domain model!) and classes to manage objects of these
+A regular project is created. This project acts as *business logic layer*. What do we need in this layer? Business classes (representing entity types from your domain model!) and classes to manage objects of these
 classes:
 
 * Test classes... Of course your business logic should be tested and you'll use a test-first approach. BusinessLogic tests will be part of this module (to keep this tutorial short, testing has been left out though).
-* A Customer class to represent a real world Customer.
+* A Customer class to represent a real world Customer (assuming this is part of your domain).
 * A CustomerManager class that is able to create / deal with new Customer objects and to store (add) these somehow, for example
 in a field of type List. This way, the CustomerManager can deliver a list of all customers as well. So, the
 CustomerManager provides sevices to other classes. For this moment, it contains an in-memory database (List). That might
@@ -215,7 +215,7 @@ answers GUI questions in a Request-Response fashion. There could be multiple fro
 a web front end or even a console front end). Why would the Business Logic worry?!
 
 So, the GUI is a component that uses the BusinessLogic as a service, a Dependent-On-Component. But it shouldn't create
-this service itself! If it would do, the GUI would be tightly coupled. When we would do GUI testing, there is no way to
+this service itself! If it would, the GUI would be tightly coupled. When we would do GUI testing, there is no way to
 test its interaction with the BusinessLogic without using the real implementation of that BusinessLogic. This real implementation
 might not be ready or stable (e.g. depending on actual database contents). The GUI should only talk to the BusinessLogic interface
 (let's call it the BusinessLogicAPI) and get an actual implementation injected.
@@ -351,4 +351,4 @@ you'll notice that there will be a lot of duplicated code (at least almost the s
 (e.g. CustomerStorageService, FlightStorageService etc.). First step is to move some code to a shared abstract super class, then
 you might want to make it more generic using Generic Types, and at some point you might consider using reflection to automatically
 get an objects' fields, their data types and their values (typical things you need to store and retrieve data from a database).
-Goal is to end up with less and well readable and well testable code. Allow yourself to further optimize your implementation step-by-step. Don't worry, refactoring is often necessary: https://youtube.com/watch?v=vqEg37e4Mkw&feature=share[Martin Fowler on refactoring])
+Goal is to end up with less and well readable and well testable code. Allow yourself to further optimize your implementation step-by-step. Don't worry, refactoring is often necessary: https://youtube.com/watch?v=vqEg37e4Mkw&feature=share[Martin Fowler on refactoring]
