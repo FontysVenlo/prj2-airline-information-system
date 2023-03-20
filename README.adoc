@@ -134,7 +134,7 @@ projects that we'll create on the fly. Within this project you can create so-cal
 POM file of your AIS-project and set the informaticspom as its parent-pom; make sure your pom-file looks like the one below. All libraries that are accessible via the informaticspom will from now be available in all future sub projects (sub modules).
 
 .pom-file in order to have informaticspom as parent
-[source,java]
+[source,xml]
 ----
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
@@ -352,3 +352,55 @@ you'll notice that there will be a lot of duplicated code (at least almost the s
 you might want to make it more generic using Generic Types, and at some point you might consider using reflection to automatically
 get an objects' fields, their data types and their values (typical things you need to store and retrieve data from a database).
 Goal is to end up with less and well readable and well testable code. Allow yourself to further optimize your implementation step-by-step. Don't worry, refactoring is often necessary: https://youtube.com/watch?v=vqEg37e4Mkw&feature=share[Martin Fowler on refactoring]
+
+* Students with newer MacBooks (M1/M2 ARM Architecture) might encounter issues running JavaFX applications. These issues can be solved by installing a JDK that encorporates JavaFX already: https://www.azul.com/downloads/?version=java-17-lts&os=macos&architecture=arm-64-bit&package=jdk-fx#zulu
+
+* Sometimes, developers in a team have to work with different local settings (for example because of using different OS). As described in the previous bullet, also the local JavaFX version might differ. To enable individual settings, without getting annoyed by settings in your shared repo that are not the same to everyone and continuously changed, you can configure personal settings in a maven configuration file:  <your_home_dir>/.m2/settings.xml  As soon as you create this file, maven will apply settings. Below, an example of how it looks like to configure a local JavaFX version:
+
+.settings.xml with profile for local JavaFX version 
+[source,xml]
+----
+<settings xmlns="http://maven.apache.org/SETTINGS/1.0.0"
+          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+          xsi:schemaLocation="http://maven.apache.org/SETTINGS/1.0.0 http://maven.apache.org/xsd/settings-1.0.0.xsd">
+    <profiles>
+        <profile>
+            <id>javafxlocal</id>
+            <properties>
+                <local-javafx-version>17.0.2</local-javafx-version>
+            </properties>
+        </profile>
+    </profiles>
+    <activeProfiles>
+        <activeProfile>javafxlocal</activeProfile>
+    </activeProfiles>
+</settings>
+----
+
+The tag name <local-javafx-version> is a self defined property, it could have been named differently. You can de-activate this so-called profile by commenting out the <activeProfile> line.
+
+In the pom where you're using JavaFX as dependency, configure it as below:
+
+.snippet from pom.xml with variable JavaFX version 
+[source,xml]
+----
+.....
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <local-javafx-version>19</local-javafx-version>
+    </properties>
+    <dependencies>
+        <dependency>
+            <groupId>org.openjfx</groupId>
+            <artifactId>javafx-controls</artifactId>
+            <version>${local-javafx-version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.openjfx</groupId>
+            <artifactId>javafx-fxml</artifactId>
+            <version>${local-javafx-version}</version>
+        </dependency>
+.....
+----
+
+Above, the version in the JavaFX dependencies refer to ${local-javafx-version}. This variable is defined as property in the <properties> section. In this case, the version is resolved to 19. This is the default for all developers in the team. If you're using another version, e.g. 17.0.2, having the settings.xml file as described above, will override the version setting. So, settings.xml overrules the settings in the project pom. This concept has been applied in the pom.xml file in the GUI-project.
