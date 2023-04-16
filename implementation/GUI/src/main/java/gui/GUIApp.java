@@ -29,18 +29,13 @@ public class GUIApp extends Application {
     private final Callback<Class<?>, Object> controllerFactory = (Class<?> c)
             -> {
 
-        switch (c.getName()) {
-            case "gui.CustomerController":
-                return new CustomerController(this::getSceneManager, businessLogicAPI.getCustomerManager());
-            case "gui.PrimaryController":
-                return new PrimaryController(this::getSceneManager);
-            case "gui.SecondaryController":
-                return new SecondaryController(this::getSceneManager);
-            case "gui.ErrorController":
-                return new ErrorController(this::getSceneManager);
-            default:
-                return null;
-        }
+        return switch (c.getName()) {
+            case "gui.CustomerController" -> new CustomerController(this::getSceneManager, businessLogicAPI.getCustomerManager());
+            case "gui.PrimaryController" -> new PrimaryController(this::getSceneManager);
+            case "gui.SecondaryController" -> new SecondaryController(this::getSceneManager);
+            case "gui.ErrorController" -> new ErrorController(this::getSceneManager);
+            default -> null;
+        };
     };
 
     public GUIApp(BusinessLogicAPI businessLogicAPI) {
