@@ -11,7 +11,7 @@
     <version>1.0-SNAPSHOT</version>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <local-javafx-version>20.0.1</local-javafx-version>
+        <local-javafx-version>21.0.2</local-javafx-version>
     </properties>
     <dependencies>
         <dependency>
@@ -32,19 +32,19 @@
         <dependency>
             <groupId>org.testfx</groupId>
             <artifactId>testfx-junit5</artifactId>
-            <version>4.0.15-alpha</version>
+            <version>4.0.18</version>
             <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>org.testfx</groupId>
             <artifactId>testfx-junit</artifactId>
-            <version>4.0.15-alpha</version>
+            <version>4.0.18</version>
             <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>org.testfx</groupId>
             <artifactId>testfx-core</artifactId>
-            <version>4.0.15-alpha</version>
+            <version>4.0.18</version>
             <scope>test</scope>
         </dependency>
     </dependencies>
@@ -60,8 +60,7 @@
                     -->
                     <argLine> 
                         ${argLine}
-                        --add-opens gui_module/gui=ALL-UNNAMED 
-                        --add-opens javafx.graphics/com.sun.javafx.application.ParametersImpl=ALL-UNNAMED
+                        --add-opens gui_module/gui=ALL-UNNAMED
                         --add-exports javafx.graphics/com.sun.javafx.application=ALL-UNNAMED
                     </argLine>
                 </configuration>
@@ -69,7 +68,7 @@
             <plugin>
                 <groupId>org.openjfx</groupId>
                 <artifactId>javafx-maven-plugin</artifactId>
-                <version>0.0.4</version>
+                <version>0.0.8</version>
                 <configuration>
                     <mainClass>gui.App</mainClass>
                 </configuration>
