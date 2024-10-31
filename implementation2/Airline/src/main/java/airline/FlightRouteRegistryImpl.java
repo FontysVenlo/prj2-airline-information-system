@@ -6,22 +6,22 @@ import java.util.List;
 
 import airline.dataconnections.CsvFile;
 
-class FlightRegistryImpl implements FlightRegistry {
-    private List<Flight> flights;
+class FlightRouteRegistryImpl implements FlightRouteRegistry {
+    private List<FlightRoute> flights;
 
-    FlightRegistryImpl() {
+    FlightRouteRegistryImpl() {
         this.flights = readFlights();
     }
 
-    public List<Flight> getFlights() {
+    public List<FlightRoute> getFlights() {
         return flights;
     }
 
-    private static List<Flight> readFlights() {
-        List<Flight> flights = new ArrayList<>();
+    private static List<FlightRoute> readFlights() {
+        List<FlightRoute> flights = new ArrayList<>();
         List<String[]> routesData = CsvFile.read("routes.csv");
         for (String[] route : routesData) {
-            flights.add(new Flight(route[2], route[4]));
+            flights.add(new FlightRoute(route[2], route[4]));
         }
 
         return flights;

@@ -3,17 +3,16 @@ package airline;
 import java.util.ArrayList;
 import java.util.List;
 
-public class FlightSearch {
-    private FlightRegistry flightRegistry;
+public class PlanTrip {
+    FlightRouteRegistry flightRegistry;
 
-    public FlightSearch(FlightRegistry flightRegistry) {
+    public PlanTrip(FlightRouteRegistry flightRegistry) {
         this.flightRegistry = flightRegistry;
     }
 
-    public List<Flight> search(String fromAirport, String toAirport) {
-        List<Flight> matchingFlights = new ArrayList<>();
-
-        for (Flight flight : flightRegistry.getFlights()) {
+    public List<FlightRoute> search(String fromAirport, String toAirport) {
+        List<FlightRoute> matchingFlights = new ArrayList<>();
+        for (FlightRoute flight : flightRegistry.getFlights()) {
             if (flight.source().equals(fromAirport) && flight.destination().equals(toAirport)) {
                 matchingFlights.add(flight);
             }
