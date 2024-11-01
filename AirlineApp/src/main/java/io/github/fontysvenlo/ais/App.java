@@ -1,23 +1,34 @@
 package io.github.fontysvenlo.ais;
 
+// TODO: no com.sun, but jdk.httpserver
 import com.sun.net.httpserver.HttpServer;
+import com.sun.net.httpserver.SimpleFileServer;
 import com.sun.net.httpserver.HttpHandler;
 import com.sun.net.httpserver.HttpExchange;
 
 import java.io.IOException;
-import java.io.OutputStream;
 import java.net.InetSocketAddress;
+import java.nio.file.Paths;
+import java.nio.file.Path;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
-
+// TODO: integration test on server
 public class App {
     public static void main(String[] args) throws IOException {
         HttpServer server = HttpServer.create(new InetSocketAddress(8001), 0);
-        server.createContext("/", new RootHandler());
+
+        // from root, we serve the public resource directory
+        Path publicResources = Paths.get(Objects.requireNonNull(App.class.getClassLoader().getResource("public").getPath()));
+        server.createContext("/", SimpleFileServer.createFileHandler(publicResources));
+        // API call
         server.createContext("/api/trip/search", new TripPlanSearchHandler());
+
         server.setExecutor(null); // Creates a default executor
         server.start();
+
+        // Report ready
         System.out.println("Server started on port 8001");
     }
 
@@ -33,19 +44,6 @@ public class App {
             List<FlightRoute> flights = tripPlanService.searchRoute(fromAirport, toAirport);
 
             RequestHelper.respondJson(exchange, flights);
-        }
-    }
-
-    static class RootHandler implements HttpHandler {
-        @Override
-        public void handle(HttpExchange exchange) throws IOException {
-            // TODO: this could be serving static files (html, js, css, png) instead
-
-            String response = "Hello, World!";
-            exchange.sendResponseHeaders(200, response.length());
-            OutputStream os = exchange.getResponseBody();
-            os.write(response.getBytes());
-            os.close();
         }
     }
 }
