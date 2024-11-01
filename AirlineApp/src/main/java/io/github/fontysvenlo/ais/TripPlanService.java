@@ -11,12 +11,13 @@ public class TripPlanService {
     }
 
     public List<FlightRoute> searchRoute(String fromAirport, String toAirport) {
-        List<FlightRoute> matchingFlights = new ArrayList<>();
+        // First implementation: only direct flights
+        List<FlightRoute> routes = new ArrayList<>();
         for (FlightRoute flight : flightRegistry.getFlights()) {
             if (flight.source().equals(fromAirport) && flight.destination().equals(toAirport)) {
-                matchingFlights.add(flight);
+                routes.add(flight);
             }
         }
-        return matchingFlights;
+        return routes;
     }
 }
