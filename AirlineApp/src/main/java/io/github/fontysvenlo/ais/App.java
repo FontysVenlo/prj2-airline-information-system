@@ -20,6 +20,8 @@ public class App {
         HttpServer server = HttpServer.create(new InetSocketAddress(8001), 0);
 
         // from root, we serve the public resource directory
+
+        // TODO: this doesnt work from .jar!!
         Path publicResources = Paths.get(Objects.requireNonNull(App.class.getClassLoader().getResource("public").getPath()));
         server.createContext("/", SimpleFileServer.createFileHandler(publicResources));
         // API call
@@ -40,6 +42,7 @@ public class App {
             Map<String, String> queryParams = RequestHelper.queryParams(exchange.getRequestURI());
             String fromAirport = queryParams.get("from");
             String toAirport = queryParams.get("to");
+            // TODO: decide; We could validate parameters here and return a 400 BAD REQUEST
 
             List<FlightRoute> flights = tripPlanService.searchRoute(fromAirport, toAirport);
 
