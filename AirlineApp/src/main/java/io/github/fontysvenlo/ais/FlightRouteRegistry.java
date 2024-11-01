@@ -1,4 +1,4 @@
-package airline;
+package io.github.fontysvenlo.ais;
 
 import java.util.List;
 

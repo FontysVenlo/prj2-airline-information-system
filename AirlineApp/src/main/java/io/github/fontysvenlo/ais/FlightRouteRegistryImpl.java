@@ -1,10 +1,9 @@
-package airline;
+package io.github.fontysvenlo.ais;
 
-import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
-import airline.dataconnections.CsvFile;
+import io.github.fontysvenlo.ais.dataconnections.CsvFile;
 
 class FlightRouteRegistryImpl implements FlightRouteRegistry {
     private List<FlightRoute> flights;

@@ -1,4 +1,4 @@
-package airline.dataconnections;
+package io.github.fontysvenlo.ais.dataconnections;
 
 import java.io.BufferedReader;
 import java.io.IOException;

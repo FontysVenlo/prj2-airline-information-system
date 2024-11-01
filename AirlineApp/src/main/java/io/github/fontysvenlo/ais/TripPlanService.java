@@ -1,16 +1,16 @@
-package airline;
+package io.github.fontysvenlo.ais;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class PlanTrip {
+public class TripPlanService {
     FlightRouteRegistry flightRegistry;
 
-    public PlanTrip(FlightRouteRegistry flightRegistry) {
+    public TripPlanService(FlightRouteRegistry flightRegistry) {
         this.flightRegistry = flightRegistry;
     }
 
-    public List<FlightRoute> search(String fromAirport, String toAirport) {
+    public List<FlightRoute> searchRoute(String fromAirport, String toAirport) {
         List<FlightRoute> matchingFlights = new ArrayList<>();
         for (FlightRoute flight : flightRegistry.getFlights()) {
             if (flight.source().equals(fromAirport) && flight.destination().equals(toAirport)) {

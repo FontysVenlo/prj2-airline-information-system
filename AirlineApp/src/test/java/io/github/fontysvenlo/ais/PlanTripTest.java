@@ -1,4 +1,4 @@
-package airline;
+package io.github.fontysvenlo.ais;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,7 +23,7 @@ class PlanTripTest {
         List<FlightRoute> knownFlights = new ArrayList<>();
         FlightRouteRegistry registry = new TestFlightRegistry(knownFlights);
 
-        List<FlightRoute> results = new PlanTrip(registry).search("AMS", "MST");
+        List<FlightRoute> results = new TripPlanService(registry).searchRoute("AMS", "MST");
 
         assertThat(results).isEmpty();
     }
@@ -43,7 +43,7 @@ class PlanTripTest {
         );
         FlightRouteRegistry registry = new TestFlightRegistry(knownFlights);
 
-        List<FlightRoute> results = new PlanTrip(registry).search("GRO", "MST");
+        List<FlightRoute> results = new TripPlanService(registry).searchRoute("GRO", "MST");
 
         assertThat(results).containsExactly(
             new FlightRoute("GRO", "MST")
@@ -60,7 +60,7 @@ class PlanTripTest {
         );
         FlightRouteRegistry registry = new TestFlightRegistry(knownFlights);
 
-        List<FlightRoute> results = new PlanTrip(registry).search("MST", "MST");
+        List<FlightRoute> results = new TripPlanService(registry).searchRoute("MST", "MST");
 
         assertThat(results).isEmpty();
     }
