@@ -15,10 +15,10 @@ import java.util.Map;
 import java.util.Objects;
 
 // TODO: integration test on server
+// TODO: less code here, into unit testable parts
 public class App {
     public static void main(String[] args) throws IOException {
         HttpServer server = HttpServer.create(new InetSocketAddress(8001), 0);
-
         // from root, we serve the public resource directory
 
         // TODO: this doesnt work from .jar!!

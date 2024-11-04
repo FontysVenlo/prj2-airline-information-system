@@ -11,12 +11,10 @@ class FlightRouteRegistryTest {
 
         List<FlightRoute> flights = registry.getFlights();
 
-        assertThat(flights).isNotEmpty();
-        // There is a route from GRO to MST
-        assertThat(flights).contains(new FlightRoute("GRO", "MST"));
-
-        // There is no route from AMS to MST
-        assertThat(flights).doesNotContain(new FlightRoute("AMS", "MST"));
+        assertThat(flights)
+            .isNotEmpty()
+            .contains(new FlightRoute("GRO", "MST"))
+            .doesNotContain(new FlightRoute("AMS", "MST"));
     }
 
     @Test

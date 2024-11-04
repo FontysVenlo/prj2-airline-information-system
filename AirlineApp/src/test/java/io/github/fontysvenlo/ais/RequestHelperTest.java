@@ -8,8 +8,6 @@ import java.util.Map;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
-import com.sun.net.httpserver.Request;
-
 class RequestHelperTest {
 
     @Nested
@@ -22,7 +20,7 @@ class RequestHelperTest {
         }
 
         @Test
-        void queryReturnsMappedParamters() {
+        void queryReturnsMappedParameters() {
             Map<String, String> params = RequestHelper.queryParams(URI.create("http://localhost:1234?foo=bar&baz=qux"));
 
             assertThat(params)

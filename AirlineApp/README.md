@@ -1,3 +1,13 @@
+# WIP
+This thing does 3 different things, they're not integrated into a single use case (yet):
+- Setup a database during the tests
+    - with testcontainers - so the tests don't depend on a magically running (and stateful) database
+    - spinning up + running the test takes 2s
+- Serve a static html page
+    - not working properly because of (resource) path issues
+- Serve an API that searches the .csv for a flight route
+    - Using a registry pattern for testability
+
 # How to run
 Either:
 - run App.java from your IDE
