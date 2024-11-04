@@ -1,8 +1,11 @@
 # WIP
-This thing does 3 different things, they're not integrated into a single use case (yet):
+This thing does different things, they're not integrated into a single use case (yet):
 - Setup a database during the tests
     - with testcontainers - so the tests don't depend on a magically running (and stateful) database
     - spinning up + running the test takes 2s
+- Setup a web app automated test
+    - with testcontainers and selenium
+    - note, its so much slower, a whopping 15 seconds!
 - Serve a static html page
     - not working properly because of (resource) path issues
 - Serve an API that searches the .csv for a flight route
