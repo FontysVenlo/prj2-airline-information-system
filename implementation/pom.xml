@@ -17,7 +17,7 @@
         <module>Assembler</module>
         <module>DataRecords</module>
         <module>Persistence</module>
-        <module>openapi-swaggerui-quickstart</module>
+        <module>restapi</module>
     </modules>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
