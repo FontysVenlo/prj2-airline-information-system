@@ -16,7 +16,7 @@ public class RESTServer {
     }
 
     @Produces
-    public BusinessLogicAPI api() {
+    public BusinessLogicAPI businessLogic() {
         System.out.println("API instantiated");
         return BusinessLogicFactory.getImplementation( PersistenceFactory.getImplementation() );
     }

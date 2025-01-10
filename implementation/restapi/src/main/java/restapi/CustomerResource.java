@@ -14,14 +14,14 @@ import java.util.List;
 @Path("/customers")
 public class CustomerResource {
     @Inject
-    BusinessLogicAPI api;
+    BusinessLogicAPI businessLogic;
 
     public CustomerResource() {
         System.out.println("Resource Constructed");
     }
 
     @GET
-    public CustomerData add() {
+    public CustomerData businessLogic() {
         System.out.println("Resource add method called");
         // TODO: change to POST with actual customer data
         return api.getCustomerManager().add(new CustomerData(777, "Lennart", "Tange", LocalDate.of(1988, 2, 17)));
