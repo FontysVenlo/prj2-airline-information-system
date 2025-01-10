@@ -6,7 +6,6 @@
         <artifactId>airlineinformationsystem</artifactId>
         <version>1.0-SNAPSHOT</version>
     </parent>
-    <groupId>io.github.fontysvenlo.ais.businesslogic</groupId>
     <artifactId>BusinessLogic</artifactId>
     <dependencies>
         <dependency>

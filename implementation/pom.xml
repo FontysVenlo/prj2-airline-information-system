@@ -14,7 +14,6 @@
     <name>AirlineInformationSystem</name>
     <modules>
         <module>BusinessLogic</module>
-        <module>Assembler</module>
         <module>DataRecords</module>
         <module>Persistence</module>
         <module>restapi</module>
