@@ -24,6 +24,6 @@ public class CustomerResource {
     public CustomerData businessLogic() {
         System.out.println("Resource add method called");
         // TODO: change to POST with actual customer data
-        return api.getCustomerManager().add(new CustomerData(777, "Lennart", "Tange", LocalDate.of(1988, 2, 17)));
+        return businessLogic.getCustomerManager().add(new CustomerData(777, "Lennart", "Tange", LocalDate.of(1988, 2, 17)));
     }
 }
