@@ -14,10 +14,10 @@
     <name>AirlineInformationSystem</name>
     <modules>
         <module>BusinessLogic</module>
-        <module>GUI</module>
         <module>Assembler</module>
         <module>DataRecords</module>
         <module>Persistence</module>
+        <module>openapi-swaggerui-quickstart</module>
     </modules>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
