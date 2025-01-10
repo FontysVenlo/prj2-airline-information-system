@@ -20,8 +20,8 @@ public class CustomerResource {
         System.out.println("Resource Constructed");
     }
 
-    @GET
-    public CustomerData businessLogic() {
+    @POST
+    public CustomerData add() {
         System.out.println("Resource add method called");
         // TODO: change to POST with actual customer data
         return businessLogic.getCustomerManager().add(new CustomerData(777, "Lennart", "Tange", LocalDate.of(1988, 2, 17)));
