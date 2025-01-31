@@ -1,11 +1,11 @@
 name: Verification workflow
 
 on:
-  # TODO: remove the 'restapi' branch
+  # TODO: integrate the 'restapi' branch
   push:
-    branches: [ "restapi", "main" ]
+    branches: [ "restapi*", "main" ]
   pull_request:
-    branches: [ "restapi", "main" ]
+    branches: [ "restapi*", "main" ]
 
 jobs:
   build:

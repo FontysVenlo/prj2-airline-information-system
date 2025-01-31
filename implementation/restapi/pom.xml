@@ -4,16 +4,20 @@
     xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <parent>
-        <groupId>io.github.fontysvenlo.ais</groupId>
         <artifactId>airlineinformationsystem</artifactId>
         <version>1.0-SNAPSHOT</version>
+        <groupId>io.github.fontysvenlo.ais</groupId>
     </parent>
     <artifactId>restapi</artifactId>
     <properties>
         <quarkus.platform.group-id>io.quarkus.platform</quarkus.platform.group-id>
         <quarkus.platform.version>3.17.6</quarkus.platform.version>
+
+        <!-- This is for Quarkus as it has its own test runner -->
         <skipITs>true</skipITs>
-        <surefire-plugin.version>3.5.0</surefire-plugin.version>
+
+        <!-- Override from the informaticspom, because we get in conflict with quarkus platform  -->
+        <junit.jupiter.version>5.10.2</junit.jupiter.version>
     </properties>
 
     <dependencyManagement>
@@ -51,11 +55,20 @@
             <artifactId>rest-assured</artifactId>
             <scope>test</scope>
         </dependency>
-        <dependency>
+        <!-- assertj -->
+
+
+<dependency>
+  <groupId>org.assertj</groupId>
+  <artifactId>assertj-core</artifactId>
+  <version>3.27.0</version>
+  <scope>test</scope>
+ </dependency>
+<!--        <dependency>
             <groupId>io.github.fontysvenlo.ais</groupId>
             <artifactId>BusinessLogic</artifactId>
             <version>1.0-SNAPSHOT</version>
-        </dependency>
+        </dependency> -->
     </dependencies>
 
     <build>
