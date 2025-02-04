@@ -4,13 +4,15 @@ import io.github.fontysvenlo.ais.datarecords.CustomerData;
 
 /**
  * Wrapper class that contains CustomerData and Customer Business Logic.
- *
- * @author Informatics Fontys Venlo
  */
 public class Customer {
 
     private CustomerData customerData;
 
+    /**
+     * Constructor
+     * @param customerData the customer data
+     */
     public Customer(CustomerData customerData) {
         this.customerData = customerData;
     }

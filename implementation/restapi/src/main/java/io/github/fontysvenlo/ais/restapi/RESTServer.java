@@ -7,6 +7,9 @@ import io.quarkus.runtime.annotations.QuarkusMain;
 import io.quarkus.runtime.Quarkus;
 
 @QuarkusMain
+/**
+ * Main application class to start the REST API server.
+ */
 public class RESTServer {
     public static void main(String... args) {
         System.out.println("Running main method");

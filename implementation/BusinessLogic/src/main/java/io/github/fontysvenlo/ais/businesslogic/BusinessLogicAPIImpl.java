@@ -5,20 +5,25 @@ import io.github.fontysvenlo.ais.persistence.CustomerStorageService;
 
 /**
  * Actual business logic implementation.
- *
- * @author Informatics Fontys Venlo
  */
 class BusinessLogicAPIImpl implements BusinessLogicAPI {
 
     final PersistenceAPI persistenceAPI;
 
+    /**
+     * Constructor.
+     * @param persistenceAPI the PersistenceAPI
+     */
     BusinessLogicAPIImpl(PersistenceAPI persistenceAPI) {
         this.persistenceAPI = persistenceAPI;
     }
 
+    /**
+     * Get the implementation of the CustomerManager.
+     * @return the implementation of the CustomerManager
+     */
     @Override
     public CustomerManager getCustomerManager() {
         return new CustomerManager(persistenceAPI.getCustomerStorageService());
     }
-
 }

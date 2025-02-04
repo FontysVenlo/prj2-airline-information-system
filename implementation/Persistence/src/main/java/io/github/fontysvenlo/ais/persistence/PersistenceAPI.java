@@ -1,8 +1,7 @@
 package io.github.fontysvenlo.ais.persistence;
 
 /**
- *
- * @author Informatics Fontys Venlo
+ * API for the persistence layer. Provides access to storage services.
  */
 public interface PersistenceAPI {
 

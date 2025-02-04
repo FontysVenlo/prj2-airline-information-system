@@ -12,10 +12,13 @@ import javax.sql.DataSource;
 import org.postgresql.ds.PGSimpleDataSource;
 
 /**
- *
- * @author hvd
+ * Provides DataSources for the database connections.
  */
 public class DBProvider {
+    /**
+     * Private constructor to prevent instantiation.
+     */
+    private DBProvider() {}
 
     static Map<String, DataSource> cache = new HashMap<>();
 
