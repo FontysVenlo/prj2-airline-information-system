@@ -26,7 +26,8 @@ public class DBProvider {
 
         return cache.computeIfAbsent(sourceName,
                 (s) -> {
-                    Properties props = properties("application.properties");
+                    Properties props = properties();
+                    System.out.println("Persistence properties loaded");
 
                     PGSimpleDataSource source = new PGSimpleDataSource();
 
@@ -48,36 +49,17 @@ public class DBProvider {
         );
     }
 
-    static Properties properties(String propFileName) {
-
-        System.out.println("The USER DIR is " + System.getProperty("user.dir"));
-
-
+    static Properties properties() {
         // Preferred way to do it. No issues with working dir.
         // Uses the default location of resources (in src/main/java/resources dir)
         // getClassLoader() is still necessary!
-        Properties p = new Properties();
+        Properties properties = new Properties();
         try (InputStream dbProperties = DBProvider.class.getClassLoader().getResourceAsStream("db.properties");) {
-            p.load(dbProperties);
-            String property = p.getProperty("aisdb.username");
-            System.out.println("property = " + property);
+            properties.load(dbProperties);
         } catch (IOException ex) {
             Logger.getLogger(DBProvider.class.getName()).log(Level.SEVERE, null, ex);
         }
 
-        // Alternative way, but issues with path. Relative path works if root of
-        // Assembler project is working directory. In this case application.properties
-        // must be in same folder as pom.xml file of Persistence project.
-        // Better not to use.
-        Properties properties = new Properties();
-        try (FileInputStream fis = new FileInputStream("../Persistence/" + propFileName);) {
-            properties.load(fis);
-        } catch (IOException ignored) {
-            Logger.getLogger(DBProvider.class.getName()).log(
-                    Level.INFO,
-                    "attempt to read file from well known location failed'",
-                    ignored);
-        }
         return properties;
     }
 }
