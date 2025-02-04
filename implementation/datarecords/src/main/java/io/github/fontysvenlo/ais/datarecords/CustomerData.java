@@ -9,6 +9,6 @@ import java.time.LocalDate;
  * @param id the unique identifier of the customer
  * @param firstName the first name of the customer
  * @param lastName the last name of the customer
- * @param dob the date of birth of the customer
+ * @param dateOfBirth the date of birth of the customer
  */
-public record CustomerData (int id, String firstName, String lastName, LocalDate dob) {}
+public record CustomerData(int id, String firstName, String lastName, LocalDate dateOfBirth) {}

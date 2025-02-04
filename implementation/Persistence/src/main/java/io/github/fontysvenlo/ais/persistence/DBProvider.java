@@ -80,5 +80,4 @@ public class DBProvider {
         }
         return properties;
     }
-
 }
