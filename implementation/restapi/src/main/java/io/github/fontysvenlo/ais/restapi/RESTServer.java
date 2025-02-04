@@ -1,24 +1,26 @@
 package io.github.fontysvenlo.ais.restapi;
 
-// import persistence.PersistenceFactory;
-// import businesslogic.BusinessLogicAPI;
-// import businesslogic.BusinessLogicFactory;
+import io.github.fontysvenlo.ais.persistence.PersistenceFactory;
+import io.github.fontysvenlo.ais.businesslogic.BusinessLogicAPI;
+import io.github.fontysvenlo.ais.businesslogic.BusinessLogicFactory;
 import io.quarkus.runtime.annotations.QuarkusMain;
 import io.quarkus.runtime.Quarkus;
+import jakarta.enterprise.inject.Produces;
 
-@QuarkusMain
 /**
  * Main application class to start the REST API server.
  */
+@QuarkusMain
 public class RESTServer {
     public static void main(String... args) {
-        System.out.println("Running main method");
         Quarkus.run(args);
     }
 
-    // @Produces
-    // public BusinessLogicAPI businessLogic() {
-    //     System.out.println("API instantiated");
-    //     return BusinessLogicFactory.getImplementation( PersistenceFactory.getImplementation() );
-    // }
+    /**
+     * Provide the BusinessLogicAPI implementation, so that it can be injected into the resources.
+     */
+    @Produces
+    public BusinessLogicAPI businessLogic() {
+        return BusinessLogicFactory.getImplementation( PersistenceFactory.getImplementation() );
+    }
 }
