@@ -15,25 +15,36 @@ import io.restassured.http.ContentType;
 @TestHTTPEndpoint(CustomerResource.class)
 public class CustomerResourceTest {
     @Test
+    public void testGetCustomerNotImplemented() {
+        // TODO: implement
+        given()
+        .when()
+            .get()
+        .then()
+            // a 501 would be more precise
+            .statusCode(500);
+    }
+
+    @Test
     public void testAddNewCustomer201() {
         given()
-          .contentType(ContentType.JSON)
-          .body(new CustomerData(0, "John", "Doe", LocalDate.of(2025, 1, 1)))
-        .when()
-            .post()
-        .then()
-            .statusCode(201)
-            .body("$", hasKey("firstName"));
+            .contentType(ContentType.JSON)
+            .body(new CustomerData(0, "John", "Doe", LocalDate.of(2025, 1, 1)))
+            .when()
+                .post()
+            .then()
+                .statusCode(201)
+                .body("$", hasKey("firstName"));
    }
 
-   @Test
-   public void testAddingEmptyCustomer400() {
+    @Test
+    public void testAddingEmptyCustomer400() {
         given()
-          .contentType(ContentType.JSON)
-          .body("")
-        .when()
-            .post()
-        .then()
-            .statusCode(400);
+            .contentType(ContentType.JSON)
+            .body("")
+            .when()
+                .post()
+            .then()
+                .statusCode(400);
    }
 }

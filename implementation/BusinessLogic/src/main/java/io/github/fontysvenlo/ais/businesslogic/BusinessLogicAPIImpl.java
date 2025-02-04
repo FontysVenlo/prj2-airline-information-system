@@ -1,7 +1,6 @@
 package io.github.fontysvenlo.ais.businesslogic;
 
 import io.github.fontysvenlo.ais.persistence.PersistenceAPI;
-import io.github.fontysvenlo.ais.persistence.CustomerStorageService;
 
 /**
  * Actual business logic implementation.
