@@ -10,8 +10,7 @@ endif::[]
 This tutorial describes how to setup a layered architecture for your project.
 Before answering the question *HOW* to do that, we should ask ourselves the question
 *WHY* we would do that! An important principle in general, but definitely also in
-Software Engineering is the KISS-principle: **K**eep **I**t **S**tupid and **S**imple. Things that
-are simple are less error prone, and can be easily understood by others as well.
+Software Engineering is the KISS-principle: **K**eep **I**t **S**tupid and **S**imple. Things that are simple are less error prone, easier to verify and can be easily understood by others as well.
 Making our architecture more complex is therefore only reasonable if it serves a
 purpose.
 
@@ -34,7 +33,7 @@ can  be developed independent from each other, as long as the way they should co
 
 +
 --
-Tests and test driven development make sure that what is developed is based on the defined requirements, and not
+Tests and test-driven development make sure that what is developed is based on the defined requirements, and not
 more than that. The other way around, tests give a certain level of confidence that the implementation does what
 it should do. When software components use other services (Dependent-On-Components, DOC), we typically don't want to
 test the whole chain at once. We want to test that component (the System Under Test, SUT) in isolation. From test-
@@ -72,9 +71,9 @@ is longer, and the number of expected changes and / or extensions becomes bigger
 
 * A layered architecture that addresses the concerns:
 
- ** Representing information and interact with the user in a *(G)UI-layer*
- ** Modeling the real world, the business and its business rules in a *Business Logic Layer*
- ** Storing data in a *Persistence Layer*
+ ** *RestAPI Layer* - Presenting information and interact with external systems (such as a web page)
+ ** *Business Logic Layer* - Modeling the real world, the business and its business rules in a
+ ** *Persistence Layer* - For Storing data
 
 * Program against interfaces, instead of implementations
 
@@ -111,27 +110,26 @@ as well. Moral of the story? We have to find a balance between making things fle
 
 [TIP]
 ====
-With the demo application in this repository, you have received a (hopefully) working starting point for your project. HOWEVER... more important is that you are able to setup a project yourself as well. Therefore, the tutorial below describes the way to do it. *We highly recommend that each group member tries to setup a working project architecture themselves.* Afterwards, you can start together from scratch again, having gained relevant knowledge. The paragraphs below don't contain all the details; these can be looked up in the example implementation however. Okay, here we go...
+With the demo application in this repository, you have received a (hopefully) working starting point for your project. HOWEVER... it is important is that you are able to setup a project yourself as well. Therefore, the tutorial below describes the way to do it. *We highly recommend that each group tries to setup a working project architecture themselves.* Afterwards, you can start together from scratch again, having gained relevant knowledge. The paragraphs below don't contain all the details; these can be looked up in the example implementation however. Okay, here we go...
 ====
 
-*What's key? Our Business Logic of course!* The persistence layer is only a service that serves the
-Business Logic Layer by storing object data at any time, and retrieving these on request. From a
-business point of view not important. The (G)UI only enables end users to interact with the business
-logic. From that perspective it's only a passthrough and a messenger; relevant from a software system
+*What's key? Our Business Logic of course!* The persistence layer is only a service that serves the Business Logic Layer by storing object data at any time, and retrieving these on request. From a business point of view not important. The (G)UI only enables end users to interact with the business logic. From that perspective it's only a passthrough and a messenger; relevant from a software system
 point of view, not from a business point of view. Assume that we want to write an application that is
 able to create, store and retrieve customers. We'll explain the setup step-by-step afterwards.
 
-* Create a NetBeans project.
+* Create a Maven project, either:
+    - in your IDE
+        -- In NetBeans, choose 'Java with Maven' and 'POM project' as project type.
+    - via the command line using `mvn archetype:generate` - see https://maven.apache.org/guides/getting-started/maven-in-five-minutes.html
 
 +
 --
-Choose 'Java with Maven' and 'POM project' as project type. This Netbeans Project will be your overall
-application, let's call it AirlineInformationSystem (AIS). This AIS will be the parent of all your sub
-projects that we'll create on the fly. Within this project you can create so-called modules, which are
-*Maven Modules*. This comes with some benefits:
+This Project will be your overall application, let's call it AirlineInformationSystem (AIS). This AIS will be the parent of all your sub
+projects that we'll create on the fly. A Maven project can be recognized by its pom.xml (POM = Project Object Model). This file contains all the settings of your project.
 
-* All sub projects (Maven modules) will have this project as parent and inherit general settings. Open the
-POM file of your AIS-project and set the informaticspom as its parent-pom; make sure your pom-file looks like the one below. All libraries that are accessible via the informaticspom will from now be available in all future sub projects (sub modules).
+Within this project you can create so-called modules, which are *Maven Modules*. This comes with some benefits:
+
+* All sub projects (Maven modules) will have this project as parent and inherit general settings. Open the POM file of your AIS-project and set the informaticspom as its parent-pom; make sure your pom-file looks like the one below. All libraries that are accessible via the informaticspom will from now be available in all future sub projects.
 
 .pom-file in order to have informaticspom as parent
 [source,xml]
@@ -142,7 +140,7 @@ POM file of your AIS-project and set the informaticspom as its parent-pom; make 
     <parent>
         <groupId>io.github.fontysvenlo</groupId>
         <artifactId>informaticspom</artifactId>
-        <version>0.9</version>
+        <version>1.5</version>
         <relativePath/>
     </parent>
     <groupId>nl.fontys.ais</groupId>
@@ -157,8 +155,10 @@ POM file of your AIS-project and set the informaticspom as its parent-pom; make 
 ----
 
 * Your complete software including all its modules can now be build with one single Maven command (in your root project), with additional benefit that Maven will take care of the proper build-order (in case of dependencies).
-* All your sub projects will be created in sub folders of this AIS-project, avoiding having projects defined
-in different locations.
+* All your sub projects will be created in sub directories of this AIS-project, avoiding having projects defined in different locations.
+
+[TIP]
+This structure is sometimes also referred to as a *monorepo* (https://en.wikipedia.org/wiki/Monorepo). It has the advantage that all projects can be managed and versioned together in one repository, while still being able to build and test them separately. This is especially useful when you have a lot of projects that are closely related.
 
 --
 +
@@ -181,54 +181,54 @@ be a bad idea later on, when we use a relational database to store our customer 
 
 image::AISClassDiagram1.svg[Class diagram after 1st step]
 
-* Time to interact! Create a GUI module.
+* Time to interact! Create the RestAPI module. For the RestAPI, to work with the server, we use the Javalin framework. This module will act as *RestAPI Layer*.
 
 +
 --
 
 [TIP]
 ====
-Whenever you get issues during this project with your environment, most likely it will be related to JavaFX. In order to avoid frustration, make sure that you can create, build and execute a HelloWorld JavaFX application outside of this project context. In a temporary directory, create a new NetBeans project, select 'Java with Maven' and 'FXML JavaFX Maven Archetype (Gluon)'. You'll get a HelloWorld application out of the box. Make sure that this application builds and runs without problems, before continuing the steps below. Also make sure that you've setup SceneBuilder properly and integrated into NetBeans (Set Scene Builder Home under Preferences/Java/JavaFX).
+Whenever using a framework, make sure to check the documentation of that framework. In this case, the Javalin documentation can be found at https://javalin.io/documentation.
+Also consider the version of the framework you are using and that the version of the documentation is the same.
+
+The reason for using Javalin, is that it is lightweight and simplifies the creation of a RESTful API. It is not the only framework that can be used for this purpose, but it is a good choice for ours.
 ====
 
-Create a new module in your AIS-project, this time choose 'FXML JavaFX Maven Archetype (Gluon)' as your project type.
-This module will act as *Graphical User Interface (GUI) layer*. A ready-to-use JavaFX-application is generated.  Benefit
-of this type of JavaFX project is that the User Interface definition including all styling is in separate XML-files,
-specifically fxml-files in this case. The *User Interface Logic (No Business Logic!!!)* is in separate Controller classes.
-User Interface Logic reacts on events (like button clicks), communicates with the business logic and updates the GUI
-(e.g. shows results from the business logic, enables or disables GUI controls, is responsible for navigation to other
-windows etc). For those aware of the Model-View-Controller pattern, the fxml-files act as 'View', the controller classes
-as 'Controller' and the Business Logic layer as 'Model'.
+Create a new module in your AIS-project, and add a dependency to the Javalin framework. This can be done by adding it as a dependency to the pom.xml of the RestAPI module:
+.pom-file
+[source,xml]
+<dependencies>
+    <dependency>
+        <groupId>io.javalin</groupId>
+        <artifactId>javalin-bundle</artifactId>
+        <version>6.4.0</version>
+    </dependency>
+</dependencies>
 --
+
 +
 
 image::AISClassDiagram2.svg[Class diagram after 2nd step]
 
-* Connect the GUI to the Business Logic.
+* Connect the Server to the Business Logic.
 
 +
 --
-Time to wire up things. How could we enable the GUI-module to communicate with the BusinessLogic layer? Or the other way around?
-Should they know each other? Normally, the GUI will trigger the interaction with the BusinessLogic. Therefore it should at least
-know how to talk to it, so knowing its interface. The BusinessLogic does not need to know anything about the GUI! It normally
-answers GUI questions in a Request-Response fashion. There could be multiple front-ends for the BusinessLogic (e.g. a JavaFX Front end,
-a web front end or even a console front end). Why would the Business Logic worry?!
+Time to wire up things. How could we enable the RestAPI layer to communicate with the BusinessLogic layer? Or the other way around?
+Should they know each other? The business layer, the core of your application, should be unaware of the presentation layer (a RestAPI, a GUI)
+Normally, the RestAPI will trigger the interaction with the BusinessLogic. Therefore it should at least know how to talk to it, so knowing its interface. The BusinessLogic does not need to know anything about the RestAPI!
+It normally answers RestAPI questions in a Request-Response fashion. There could be multiple presentation forms for the business logics.
+We might need to add or change to a GraphQL API, gRPC or something that doesn't exist yet. Or make it a standalone application with JavaFX. Why would the Business Logic worry?!
 
-So, the GUI is a component that uses the BusinessLogic as a service, a Dependent-On-Component. But it shouldn't create
-this service itself! If it would, the GUI would be tightly coupled. When we would do GUI testing, there is no way to
-test its interaction with the BusinessLogic without using the real implementation of that BusinessLogic. This real implementation
-might not be ready or stable (e.g. depending on actual database contents). The GUI should only talk to the BusinessLogic interface
-(let's call it the BusinessLogicAPI) and get an actual implementation injected.
+So, the RestAPI is a component that uses the BusinessLogic, a Dependent-On-Component. But we want the RestAPI to be testable without the details of the BusinessLogic, and we want the BusinessLogic to be testable without the details of the RestAPI. We can do by injecting the BusinessLogic into the RestAPI. The RestAPI should only know the interface of the BusinessLogic, not the actual implementation. This way, we we can test the RestAPI with a mock implementation of the BusinessLogic.
 
-Final question, 'Who should inject the BusinessLogic implementation?' The businessLogic itself? No, we just learned that the
-BusinessLogic should be unaware of the presentation layer! We need another module in our AIS-project: an Assembler project that
-acts as starting point of our application and sets up all layers and connects them properly.
+However, there is one exception in our design: we need something that acts as an entry point for our application, what starts the server, a 'main' method. Lets call this our 'RESTServer'. As this is specific to the RestAPI, we put it under the RestAPI module.
+We can already set up a main method that starts a Javalin server and can listen to a request (see javalin.io documentation).
 
-So, what do we need to do? (the steps will be explained in detail below)
+So, what do we need to do next? (the steps will be explained in detail below):
 
 * Provide the BusinessLogic with an API.
-* Create an 'Assembler' module that sets up and connects our layers.
-* Inject the implementation of the BusinessLogic interface (API) in our GUI-layer.
+* Connect the BusinessLogicAPI in the RestAPI.
 
 --
 +
@@ -238,36 +238,48 @@ So, what do we need to do? (the steps will be explained in detail below)
 +
 --
 The BusinessLogic module should define its interface. You can imagine that it, on request, returns a CustomerManager.
-For example a GUI could request a CustomerManager object to do its interaction with the BusinessLogic. Via the CustomerManager,
+For example a web GUI (via its REST API) could request a CustomerManager object to do its interaction with the BusinessLogic. Via the CustomerManager,
 the GUI gains access to the Customer type as well. This is fine, though layers should be careful to expose their private parts,
-concrete implementations. 
+concrete implementations.
 
-The demo-implementation uses a data records approach. Each entity class (Customer for example) encapsulates a data record field (of type CustomerData in our example) and business logic. Data records are java _record_ types, that are immutable data carrier objects that are available in all layers of your application. To make them available, 
-we encapsulate them in a separate new module of your AIS-project. So, within your AIS-project, create a new module 'DataRecords' that is of type 'Java Application' again. Let both the BusinessLogic-layer and the GUI-layer depend on this new module.
+The demo-implementation uses a data records approach. Each entity class (Customer for example) encapsulates a data record field (of type CustomerData in our example) and business logic. Data records are java _record_ types, that are immutable data carrier objects that are available in all layers of your application. To make them available,
+we encapsulate them in a separate new module of your AIS-project. So, within your AIS-project, create a new module 'DataRecords' that is of type 'Java Application' again. Let both the BusinessLogic-layer and the RestAPI-layer depend on this new module.
 --
 +
 
-* Add dependency in GUI to the Business Logic.
+* Add dependency in RestAPI to the Business Logic.
 
 +
 --
-Make sure that your GUI module has access to the layer it depends on: the BusinessLogic layer. In the GUI NetBeans project, right-click 'Dependencies' and select 'Add dependency...'. Here you can add a dependency to the BusinessLogic project.
+Make sure that your GUI module has access to the layer it depends on: the BusinessLogic layer. Either:
+
+* In NetBeans project GUI, right-click 'Dependencies' and select 'Add dependency...'. Here you can add a dependency to the BusinessLogic project.
+* In any editor, add the dependency to the pom.xml file of the RestAPI project:
+
++
+---
+.pom-file
+[source,xml]
+<dependencies>
+    <dependency>
+        <groupId>nl.fontys.ais</groupId>
+        <artifactId>businesslogic</artifactId>
+        <version>1.0-SNAPSHOT</version>
+    </dependency>
+</dependencies>
+---
++
 --
 +
 
 
-* Create the Assembler module.
+* Connecting everything in the application entry point (RESTServer).
 
 +
 --
-Within your AIS-project, create a new module of type 'Java Application' called Assembler. This is a very simple project that contains
-the main()-method. The starting point of your application. As mentioned, responsibility is to setup layers and to connect
-them. Somehow, the Assembler must get an implementation of the BusinessLogicAPI. Like before, the BusinessLogic should provide this
-but should also be careful to expose this private part. Therefore, in the BusinessLogic layer, we create a new interface called
-BusinessLogicFactory. This interface with a static method 'getImplementation()' returns an object that
-is an implementation of the BusinessLogicAPI. Afterwards it creates an instance of the GUI app and passes the just retrieved
-BusinessLogicAPI object as parameter to it (dependency injection). The GUI construction must be changed in order to accept
-this parameter (see next step). In the Assembler Module you have to add dependencies to both the BusinessLogic as well as the GUI project. Later on, it will also need a dependency to the Persistence project.
+The starting point of your application. As mentioned, responsibility is to setup layers and to connect them. Somehow, the RESTServer must get an implementation of the BusinessLogicAPI. Like before, the BusinessLogic should provide this but should also be careful to expose this private part. Therefore, in the BusinessLogic layer, we create a new interface called BusinessLogicFactory. This interface with a static method 'getImplementation()' returns an object that
+is an implementation of the BusinessLogicAPI. Afterwards it creates an instance of a javalin server app and passes the just retrieved
+BusinessLogicAPI object as parameter to the controllers (that handle each request) (dependency injection).
 --
 +
 
@@ -275,19 +287,8 @@ this parameter (see next step). In the Assembler Module you have to add dependen
 
 +
 --
-This seems to be a fairly easy step. The JavaFX Application class can be constructed from the Assembler directly. There is
-a trap / pitfall here however. Although the Application class can be instantiated by ourselves, the Controller class
-behind each window is instantiated automatically by the FXMLLoader (the controller class is identified in the fxml-file);
-this can only be done automatically when the Controller class has a default constructor. This is, by default, the case.
-We need a parameterized constructor however, to be able to pass the BusinessLogicAPI implementation to the controller.
-What we need to do is to provide the FXMLLoader with a separate 'controller factory'. This controller factory can create
-an instance of a controller class with a non-default constructor. The FXMLLoader has a setControllerFactory(...) method.
-
-[TIP]
-====
-Our demo application provides you with an implementation that supports parameterized Controller construction. It delegates the work of loading and switching views to a SceneManager class. Compare this implementation with the default implementation (the main application class) in your generated HelloWorld JavaFX application!! You'll find out that the same things take place, however we're interrupting the automatic load process. 
-====
-
+We want to keep the RESTServer as small as possible, as this is the entry point of our application - and is more difficult to test than other parts of the application (it has a dependency on almost every other part).
+To make the handling of requests more manageable (and testable), we create a new class called CustomerController. This class is responsible for handling requests related to customers. It has a constructor that takes a BusinessLogicAPI object as parameter. This way, the RESTServer can create a new instance of the CustomerController and pass the BusinessLogicAPI object to it.
 
 --
 +
@@ -301,19 +302,18 @@ image::AISClassDiagram3.svg[Class diagram after 3rd step]
 We currently have a working application with an in-memory database. What we need is a persistence layer that is able to store
 and retrieve data on a longer term as well. Different ways to do this could be chosen, like using a relational database, or
 simply XML- or JSON files. Regardless of the storage type that is chosen, the BusinessLogic uses the persistence layer as a service.
-A Dependent-On-Component again! (compare to the GUI that depended on the BusinessLogic). But it shouldn't create
+A Dependent-On-Component again! (compare to the REST API that depends on the BusinessLogic). But it shouldn't create
 this service itself! If it would do, the BusinessLogic would be tightly coupled. When we do testing, there is no way to
 test its interaction with the Persistence layer without using the real implementation of that Persistence layer. The BusinessLogic
-should only talk to the Persistence interface (let's call it the PersistenceAPI) and get an actual implementation injected. L'histoire
-se répète. The Persistence layer should act as service for the BusinessLogic exactly like how the BusinessLogic layer acted as service
-for the GUI-layer. The Assembler can inject the PersistenceAPI implementation in the BusinessLogic. The persistence layer does not
+should only talk to the Persistence interface (let's call it the PersistenceAPI) and get an actual implementation injected. (History repeats itself!) The Persistence layer should act as service for the BusinessLogic exactly like how the BusinessLogic layer acted as service
+for the RestAPI-layer. The RESTServer can inject the PersistenceAPI implementation in the BusinessLogic. The persistence layer does not
 need to have any knowledge of the BusinessLogic layer. In the persistence project, we create the PersistenceAPI interface, a
 PersistenceAPIImpl class providing an implementation of this interface and a PersistenceFactory that can be used externally.
 
 Be careful, two details we should take care of:
 
 * The BusinessLogic layer now depends on the persistence layer (the BusinessLogic project has the Persistence project as a dependency).
-This is fine. 
+This is fine.
 
 * Since we have a persistence layer now, we should avoid having an in-memory database at the same time. This will cause issues,
 since it's difficult to keep your in-memory database always exactly in sync with your on-disk storage. Therefore remove the
@@ -325,26 +325,19 @@ cache function from the CustomerManagerImpl class.
 image::AISClassDiagram4.svg[Final class diagram]
 
 
+=== DBConfig
+The way the persistence layer is different from the business layer, is that our persistence layer is dependent on the environment it runs in. The persistence layer needs to know how to connect to the database. This is typically done by providing a configuration file. In the PersistenceAPIImpl class, we create a record called `DBConfig` that we can pass into the Factory to provide the layer from necessary information to connect to the database(s).
+On application-level, a common way of storing known configurations is to use a .properties file. So our RESTServer will be responsible for reading this file and passing it in a structured way into the Persistence Layer.
+
 == Some remarks...
 
-* This architectural setup acts as a starting point, addressing some issues that you definitely
+* *This architectural setup acts as a starting point*, addressing some issues that you definitely
 will run into when you start setting up an architecture yourself. This example architecture is not completely
 optimized yet. You'll typically notice that the services offered by both the persistence layer as the business
-logic layer could be made more generic.
+logic layer could be made more generic. Furthermore, you will discover that you will have to make additional choices along the way.
 
 * The Factory interfaces in both the BusinessLogic and the Persistence layer could be provided with additional
 parameters to influence which specific implementation is returned. The demo implementation does not use this feature yet.
-
-* Java projects nowadays use the Java Platform Module System (JPMS). This is recognizable when your project contains
-a <default package> containing a file called 'module-info.java'. JPMS will be discussed in the PRC2 lessons. JavaFX applications are by default generated as JPMS projects. All projects should be JPMS modules and configured properly. In the demo implementation you can see a way how to do this.
-
-* In the demo project, we've added an example on how to use TestFX, a framework to do GUI testing. We show how Mockito can
-be used to mock the business logic. Because of properly separated layers, we can test (parts of) layers independent of other
-layers; we can test the GUI (SUT in this case) without being dependent on the business logic (DOC in this case), and we can test
-the business logic (SUT in this case) without being dependent on the persistence layer (DOC in this case). Just consider to apply
-this concept of GUI testing in your project. In order to get it to work, uncomment the contents of the GUIAppTest class. (Warning for MacOS users: the GUI test execution only works properly if the application that initiates the GUI test (e.g. NetBeans
-or the command line if you start NetBeans from the command line) has authorization to 'control your computer'. Go to
-Settings / Security & Privacy / Privacy / Accessibility to adapt the authorizations.)
 
 * As mentioned already in the remarks above, the persistence layer could be setup in a more generic way. When you don't do that,
 you'll notice that there will be a lot of duplicated code (at least almost the same) in the different StorageService classes
@@ -353,54 +346,10 @@ you might want to make it more generic using Generic Types, and at some point yo
 get an objects' fields, their data types and their values (typical things you need to store and retrieve data from a database).
 Goal is to end up with less and well readable and well testable code. Allow yourself to further optimize your implementation step-by-step. Don't worry, refactoring is often necessary: https://youtube.com/watch?v=vqEg37e4Mkw&feature=share[Martin Fowler on refactoring]
 
-* Students with newer MacBooks (M1/M2 ARM Architecture) might encounter issues running JavaFX applications. These issues can be solved by installing a JDK that encorporates JavaFX already: https://www.azul.com/downloads/?version=java-17-lts&os=macos&architecture=arm-64-bit&package=jdk-fx#zulu
+* In the demo project, we've added examples tests:
+    - The Persistence layer - has an example test to start a real database (in a container, using testcontainers (https://testcontainers.com/)) and test the implementation against it. (NOTE: the demo project uses hard-coded values and doesn't connect with the actual database).
+    - The REST API layer - has an example test, in isolation, shows you how to test the behavior of the controller, without testing the actual implementation of the BusinessLogic layer.
+    - The DataRecords - DataRecords themselves have no behavior, which is an argument for not testing them (directly).
+    - The Business Layer - The demo project does not contain tests for the BusinessLogic layer. This is something you should add yourself.
 
-* Sometimes, developers in a team have to work with different local settings (for example because of using different OS). As described in the previous bullet, also the local JavaFX version might differ. To enable individual settings, without getting annoyed by settings in your shared repo that are not the same to everyone and continuously changed, you can configure personal settings in a maven configuration file:  <your_home_dir>/.m2/settings.xml  As soon as you create this file, maven will apply settings. Below, an example of how it looks like to configure a local JavaFX version:
-
-.settings.xml with profile for local JavaFX version 
-[source,xml]
-----
-<settings xmlns="http://maven.apache.org/SETTINGS/1.0.0"
-          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-          xsi:schemaLocation="http://maven.apache.org/SETTINGS/1.0.0 http://maven.apache.org/xsd/settings-1.0.0.xsd">
-    <profiles>
-        <profile>
-            <id>javafxlocal</id>
-            <properties>
-                <local-javafx-version>17.0.2</local-javafx-version>
-            </properties>
-        </profile>
-    </profiles>
-    <activeProfiles>
-        <activeProfile>javafxlocal</activeProfile>
-    </activeProfiles>
-</settings>
-----
-
-The tag name <local-javafx-version> is a self defined property, it could have been named differently. You can de-activate this so-called profile by commenting out the <activeProfile> line.
-
-In the pom where you're using JavaFX as dependency, configure it as below:
-
-.snippet from pom.xml with variable JavaFX version 
-[source,xml]
-----
-.....
-    <properties>
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <local-javafx-version>19</local-javafx-version>
-    </properties>
-    <dependencies>
-        <dependency>
-            <groupId>org.openjfx</groupId>
-            <artifactId>javafx-controls</artifactId>
-            <version>${local-javafx-version}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.openjfx</groupId>
-            <artifactId>javafx-fxml</artifactId>
-            <version>${local-javafx-version}</version>
-        </dependency>
-.....
-----
-
-Above, the version in the JavaFX dependencies refer to ${local-javafx-version}. This variable is defined as property in the <properties> section. In this case, the version is resolved to 19. This is the default for all developers in the team. If you're using another version, e.g. 17.0.2, having the settings.xml file as described above, will override the version setting. So, settings.xml overrules the settings in the project pom. This concept has been applied in the pom.xml file in the GUI-project.
+* There is file `.github/workflows/verify.yml`, which contains a GitHub Actions workflow that runs the tests on every push to the repository. This is a good practice to ensure that your code is always in a working state. You can find more information about GitHub Actions at https://docs.github.com/en/actions.

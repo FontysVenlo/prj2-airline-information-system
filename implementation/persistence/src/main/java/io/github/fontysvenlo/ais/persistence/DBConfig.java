@@ -3,7 +3,8 @@ package io.github.fontysvenlo.ais.persistence;
 import java.util.Properties;
 
 /**
- * Configuration for the database connection.
+ * Configuration for instantiating the database connection, which could be specific to the environment
+ * the application runs on.
  * @param namespace the namespace of the configuration, so that we can have multiple configurations at the same time
  * @param host the host of the database
  * @param port the port of the database
