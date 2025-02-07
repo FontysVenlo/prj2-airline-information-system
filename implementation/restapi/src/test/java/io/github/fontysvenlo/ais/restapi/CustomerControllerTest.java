@@ -19,12 +19,14 @@ public class CustomerControllerTest {
 
     private BusinessLogicAPI businessLogic;
     private CustomerManager customerManager;
+    private CustomerController customerController;
 
     @BeforeEach
     public void setup() {
         businessLogic = mock(BusinessLogicAPI.class);
         customerManager = mock(CustomerManager.class);
         when(businessLogic.getCustomerManager()).thenReturn(customerManager);
+        customerController = new CustomerController(businessLogic);
     }
 
     @Test
@@ -33,7 +35,7 @@ public class CustomerControllerTest {
         when(customerManager.list()).thenReturn(new ArrayList<>());
 
         // Act
-        CustomerController.list(businessLogic, context);
+        customerController.list(context);
 
         // Assert
         verify(context).status(200);
@@ -47,7 +49,7 @@ public class CustomerControllerTest {
         when(context.bodyAsClass(CustomerData.class)).thenReturn(customerData);
 
         // Act
-        CustomerController.add(businessLogic, context);
+        customerController.add(context);
 
         // Assert
         verify(context).status(201);
@@ -60,10 +62,9 @@ public class CustomerControllerTest {
         when(context.body()).thenReturn(null);
 
         // Act
-        CustomerController.add(businessLogic, context);
+        customerController.add(context);
 
         // Assert
         verify(context).status(400);
     }
-
 }

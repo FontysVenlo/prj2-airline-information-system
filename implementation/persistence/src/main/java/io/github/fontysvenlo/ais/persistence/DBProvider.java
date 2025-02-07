@@ -1,65 +1,32 @@
 package io.github.fontysvenlo.ais.persistence;
 
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.InputStream;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Properties;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.sql.DataSource;
 import org.postgresql.ds.PGSimpleDataSource;
 
 /**
- * Provides DataSources for the database connections.
+ * Provides DataSources for the database connection.
  */
 public class DBProvider {
-    /**
-     * Private constructor to prevent instantiation.
-     */
-    private DBProvider() {}
-
     static Map<String, DataSource> cache = new HashMap<>();
 
-    static DataSource getDataSource(final String sourceName) {
+    static DataSource getDataSource(final DBConfig config) {
+        return cache.computeIfAbsent(config.namespace(), namespace -> {
+                PGSimpleDataSource source = new PGSimpleDataSource();
 
-        return cache.computeIfAbsent(sourceName,
-                (s) -> {
-                    Properties props = properties();
-                    System.out.println("Persistence properties loaded");
+                String[] serverNames = {config.host()};
+                source.setServerNames(serverNames);
 
-                    PGSimpleDataSource source = new PGSimpleDataSource();
+                int[] portNumbers = {config.port()};
+                source.setPortNumbers(portNumbers);
+                source.setUser(config.username());
+                source.setDatabaseName(config.name());
+                source.setPassword(config.password());
+                source.setCurrentSchema(config.schema());
 
-                    String prefix = sourceName + ".";
-
-                    String[] serverNames = {props.getProperty(prefix + "dbhost")};
-                    source.setServerNames(serverNames);
-
-                    int[] portNumbers = {Integer.parseInt(props.getProperty(prefix + "port"))};
-                    source.setPortNumbers(portNumbers);
-
-                    source.setUser(props.getProperty(prefix + "username"));
-                    source.setDatabaseName(props.getProperty(prefix + "dbname"));
-                    source.setPassword(props.getProperty(prefix + "password"));
-                    source.setCurrentSchema(props.getProperty(prefix + "schema"));
-
-                    return source;
-                }
+                return source;
+            }
         );
-    }
-
-    static Properties properties() {
-        // Preferred way to do it. No issues with working dir.
-        // Uses the default location of resources (in src/main/java/resources dir)
-        // getClassLoader() is still necessary!
-        Properties properties = new Properties();
-        try (InputStream dbProperties = DBProvider.class.getClassLoader().getResourceAsStream("db.properties");) {
-            properties.load(dbProperties);
-        } catch (IOException ex) {
-            Logger.getLogger(DBProvider.class.getName()).log(Level.SEVERE, null, ex);
-        }
-
-        return properties;
     }
 }

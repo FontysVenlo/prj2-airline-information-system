@@ -4,8 +4,25 @@ import io.github.fontysvenlo.ais.businesslogic.BusinessLogicAPI;
 import io.github.fontysvenlo.ais.datarecords.CustomerData;
 import io.javalin.http.Context;
 
-public class CustomerController {
-    public static void add(BusinessLogicAPI businessLogic, Context context) {
+/**
+ * This class is responsible for handling the requests for the customer resource.
+ */
+class CustomerController {
+    private BusinessLogicAPI businessLogic;
+
+    /**
+     * Initializes the controller with the business logic.
+     */
+    CustomerController(BusinessLogicAPI businessLogic) {
+        this.businessLogic = businessLogic;
+    }
+
+    /**
+     * Adds a customer to the storage.
+     * - If the customer data is null, the status is set to 400 (Bad Request).
+     * - Otherwise, the status is set to 201 (Created) and the added customer is returned as JSON.
+     */
+    void add(Context context) {
         CustomerData customerData = context.bodyAsClass(CustomerData.class);
         System.out.println(customerData);
         if (customerData == null) {
@@ -16,7 +33,11 @@ public class CustomerController {
         context.json(businessLogic.getCustomerManager().add(customerData));
     }
 
-    public static void list(BusinessLogicAPI businessLogic, Context context) {
+    /**
+     * Retrieves all customers from the storage.
+     * - The status is set to 200 (OK) and the list of customers is returned as JSON.
+     */
+    void list(Context context) {
         context.status(200);
         context.json(businessLogic.getCustomerManager().list());
     }
