@@ -18,6 +18,8 @@ import io.javalin.Javalin;
  * This class is responsible for starting the REST server and defining the routes.
  */
 public class RESTServer {
+    private final static int PORT = 5173;
+
     /**
      * Main method to start the REST server
      */
@@ -27,14 +29,21 @@ public class RESTServer {
 
         CustomerController customerController = new CustomerController(businessLogic);
 
-        Javalin.create(/*config*/)
+        Javalin.create(config -> {
+                config.router.contextPath = "/api/v1";
+                config.bundledPlugins.enableCors(cors -> {
+                    cors.addRule(it -> {
+                        it.allowHost("http://localhost:" + PORT, "127.0.0.1:5173" + PORT);
+                    });
+                });
+            })
             .get("customers", context -> {
                 customerController.list(context);
             })
             .post("customers", context -> {
                 customerController.add(context);
             })
-            .start(7070);
+            .start(PORT);
     }
 
     private static Properties loadProperties(String resourceFileName) {
