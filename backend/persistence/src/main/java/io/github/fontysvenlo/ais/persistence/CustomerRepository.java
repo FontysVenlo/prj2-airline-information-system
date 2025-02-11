@@ -4,9 +4,9 @@ import io.github.fontysvenlo.ais.datarecords.CustomerData;
 import java.util.List;
 
 /**
- * Interface that describes all services offered by the CustomerStorageService.
+ * Interface that describes all services offered by the CustomerRepository.
  */
-public interface CustomerStorageService {
+public interface CustomerRepository {
     /**
      * Adds a customer to the storage.
      * @param customerData the customer to add

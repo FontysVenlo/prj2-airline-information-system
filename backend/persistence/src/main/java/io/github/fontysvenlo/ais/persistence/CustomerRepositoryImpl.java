@@ -11,15 +11,15 @@ import io.github.fontysvenlo.ais.datarecords.CustomerData;
  * At the moment only returns dummy object with an id that is set.
  * Normally it will connect to a database and do all the handling.
  */
-class CustomerStorageServiceImpl implements CustomerStorageService {
+class CustomerRepositoryImpl implements CustomerRepository {
     private DataSource db;
 
-    public CustomerStorageServiceImpl(DBConfig config) {
+    public CustomerRepositoryImpl(DBConfig config) {
         this.db = DBProvider.getDataSource(config);
     }
 
     /**
-     * @see CustomerStorageService#add(CustomerData)
+     * @see CustomerRepository#add(CustomerData)
      */
     @Override
     public CustomerData add(CustomerData customerData) {
@@ -28,7 +28,7 @@ class CustomerStorageServiceImpl implements CustomerStorageService {
     }
 
     /**
-     * @see CustomerStorageService#getAll(CustomerData)
+     * @see CustomerRepository#getAll(CustomerData)
      */
     @Override
     public List<CustomerData> getAll() {

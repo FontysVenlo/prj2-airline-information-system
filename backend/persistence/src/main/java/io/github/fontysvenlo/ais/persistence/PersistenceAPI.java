@@ -6,15 +6,15 @@ package io.github.fontysvenlo.ais.persistence;
 public interface PersistenceAPI {
 
     /**
-     * Get CustomerStorageService. Provides a storage object that knows how to
+     * Get CustomerRepository. Provides a storage object that knows how to
      * store and retrieve customers. Implemented by a default method, to enable
      * creation of customized PersistenceFacade implementations with limited
      * services, for test purposes.
      *
-     * @return CustomerStorageService object that knows how to store and
+     * @return CustomerRepository object that knows how to store and
      * retrieve customers.
      */
-    default CustomerStorageService getCustomerStorageService() {
+    default CustomerRepository getCustomerRepository() {
         return null;
     }
 

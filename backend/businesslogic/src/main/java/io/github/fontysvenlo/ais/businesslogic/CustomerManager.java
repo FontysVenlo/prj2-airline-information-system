@@ -3,24 +3,24 @@ package io.github.fontysvenlo.ais.businesslogic;
 import java.util.List;
 
 import io.github.fontysvenlo.ais.datarecords.CustomerData;
-import io.github.fontysvenlo.ais.persistence.CustomerStorageService;
+import io.github.fontysvenlo.ais.persistence.CustomerRepository;
 
 
 /**
  * Manages customers in the business logic.
- * Linking pin between GUI and persistence. Connected to customerStorageService
+ * Linking pin between GUI and persistence. Connected to CustomerRepository
  * in order to retrieve customers and to persist changes.
  */
 public class CustomerManager {
 
-    private final CustomerStorageService customerStorageService;
+    private final CustomerRepository CustomerRepository;
 
     /**
      * Constructor
-     * @param customerStorageService the customer storage service
+     * @param CustomerRepository the customer storage service
      */
-    public CustomerManager( CustomerStorageService customerStorageService ) {
-        this.customerStorageService = customerStorageService;
+    public CustomerManager( CustomerRepository CustomerRepository ) {
+        this.CustomerRepository = CustomerRepository;
     }
 
     /**
@@ -29,7 +29,7 @@ public class CustomerManager {
      * @return the added customer data
      */
     public CustomerData add( CustomerData customerData ){
-        return customerStorageService.add(customerData);
+        return CustomerRepository.add(customerData);
     }
 
     /**
@@ -37,7 +37,7 @@ public class CustomerManager {
      * @return a list of all customers
      */
     public List<CustomerData> list(){
-        return customerStorageService.getAll();
+        return CustomerRepository.getAll();
     }
 
 }

@@ -40,11 +40,11 @@ public class PersistenceIntegrationTest {
     void testAddingAndRetrievingCustomers() {
         // Arrange
         PersistenceAPI persistenceAPI = PersistenceFactory.getImplementation(config);
-        CustomerStorageService customerStorageService = persistenceAPI.getCustomerStorageService();
+        CustomerRepository CustomerRepository = persistenceAPI.getCustomerRepository();
 
         // Act
-        customerStorageService.add(new CustomerData(0, "John", "Doe", LocalDate.of(2025, 1, 1)));
-        List<CustomerData> customers = customerStorageService.getAll();
+        CustomerRepository.add(new CustomerData(0, "John", "Doe", LocalDate.of(2025, 1, 1)));
+        List<CustomerData> customers = CustomerRepository.getAll();
 
         // Assert
         // Note: this assumes that the database was empty before the test.

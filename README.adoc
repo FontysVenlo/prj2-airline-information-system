@@ -341,7 +341,7 @@ parameters to influence which specific implementation is returned. The demo impl
 
 * As mentioned already in the remarks above, the persistence layer could be setup in a more generic way. When you don't do that,
 you'll notice that there will be a lot of duplicated code (at least almost the same) in the different StorageService classes
-(e.g. CustomerStorageService, FlightStorageService etc.). First step is to move some code to a shared abstract super class, then
+(e.g. CustomerRepository, FlightStorageService etc.). First step is to move some code to a shared abstract super class, then
 you might want to make it more generic using Generic Types, and at some point you might consider using reflection to automatically
 get an objects' fields, their data types and their values (typical things you need to store and retrieve data from a database).
 Goal is to end up with less and well readable and well testable code. Allow yourself to further optimize your implementation step-by-step. Don't worry, refactoring is often necessary: https://youtube.com/watch?v=vqEg37e4Mkw&feature=share[Martin Fowler on refactoring]

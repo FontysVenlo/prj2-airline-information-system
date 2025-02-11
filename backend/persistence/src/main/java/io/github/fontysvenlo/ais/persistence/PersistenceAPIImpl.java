@@ -11,11 +11,11 @@ class PersistenceAPIImpl implements PersistenceAPI{
     }
 
     /**
-     * Get the implementation of the CustomerStorageService.
-     * @return the implementation of the CustomerStorageService
+     * Get the implementation of the CustomerRepository.
+     * @return the implementation of the CustomerRepository
      */
     @Override
-    public CustomerStorageService getCustomerStorageService() {
-        return new CustomerStorageServiceImpl(config);
+    public CustomerRepository getCustomerRepository() {
+        return new CustomerRepositoryImpl(config);
     }
 }
