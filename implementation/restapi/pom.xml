@@ -9,16 +9,6 @@
         <groupId>io.github.fontysvenlo.ais</groupId>
     </parent>
     <artifactId>restapi</artifactId>
-    <properties>
-        <quarkus.platform.group-id>io.quarkus.platform</quarkus.platform.group-id>
-        <quarkus.platform.version>3.17.6</quarkus.platform.version>
-
-        <!-- This is for Quarkus as it has its own test runner -->
-        <skipITs>true</skipITs>
-
-        <!-- Override from the informaticspom, because we get in conflict with quarkus platform  -->
-        <junit.jupiter.version>5.10.2</junit.jupiter.version>
-    </properties>
 
     <dependencies>
         <dependency>
