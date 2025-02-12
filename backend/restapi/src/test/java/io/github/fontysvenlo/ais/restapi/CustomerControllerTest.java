@@ -35,7 +35,7 @@ public class CustomerControllerTest {
         when(customerManager.list()).thenReturn(new ArrayList<>());
 
         // Act
-        customerController.list(context);
+        customerController.getAll(context);
 
         // Assert
         verify(context).status(200);
@@ -49,7 +49,7 @@ public class CustomerControllerTest {
         when(context.bodyAsClass(CustomerData.class)).thenReturn(customerData);
 
         // Act
-        customerController.add(context);
+        customerController.create(context);
 
         // Assert
         verify(context).status(201);
@@ -62,7 +62,7 @@ public class CustomerControllerTest {
         when(context.body()).thenReturn(null);
 
         // Act
-        customerController.add(context);
+        customerController.create(context);
 
         // Assert
         verify(context).status(400);

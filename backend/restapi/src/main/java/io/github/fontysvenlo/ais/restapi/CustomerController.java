@@ -1,14 +1,17 @@
 package io.github.fontysvenlo.ais.restapi;
 
+import com.fasterxml.jackson.databind.JsonMappingException;
+import io.javalin.http.Context;
+import io.javalin.apibuilder.CrudHandler;
+
 import io.github.fontysvenlo.ais.businesslogic.BusinessLogicAPI;
 import io.github.fontysvenlo.ais.datarecords.CustomerData;
-import io.javalin.http.Context;
 
 /**
  * This class is responsible for handling the requests for the customer resource.
  */
-class CustomerController {
-    private BusinessLogicAPI businessLogic;
+class CustomerController implements CrudHandler {
+    final private BusinessLogicAPI businessLogic;
 
     /**
      * Initializes the controller with the business logic.
@@ -22,9 +25,9 @@ class CustomerController {
      * - If the customer data is null, the status is set to 400 (Bad Request).
      * - Otherwise, the status is set to 201 (Created) and the added customer is returned as JSON.
      */
-    void add(Context context) {
+    @Override
+    public void create(Context context) {
         CustomerData customerData = context.bodyAsClass(CustomerData.class);
-        System.out.println(customerData);
         if (customerData == null) {
             context.status(400);
             return;
@@ -37,8 +40,24 @@ class CustomerController {
      * Retrieves all customers from the storage.
      * - The status is set to 200 (OK) and the list of customers is returned as JSON.
      */
-    void list(Context context) {
+    @Override
+    public void getAll(Context context) {
         context.status(200);
         context.json(businessLogic.getCustomerManager().list());
+    }
+
+    @Override
+    public void delete(Context context, String customerId) {
+        throw new UnsupportedOperationException("Not implemented yet");
+    }
+
+    @Override
+    public void getOne(Context context, String customerId) {
+        throw new UnsupportedOperationException("Not implemented yet");
+    }
+
+    @Override
+    public void update(Context context, String customerId) {
+        throw new UnsupportedOperationException("Not implemented yet");
     }
 }
