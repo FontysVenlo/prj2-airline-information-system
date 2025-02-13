@@ -4,6 +4,7 @@ import java.util.Properties;
 
 /**
  * Represents the configuration of the REST API server.
+ * @param port The port to bind the server to
  */
 public record ServerConfig(int port) {
     /**

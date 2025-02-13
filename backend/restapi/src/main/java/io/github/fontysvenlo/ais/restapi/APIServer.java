@@ -1,10 +1,7 @@
 package io.github.fontysvenlo.ais.restapi;
 
 import static io.javalin.apibuilder.ApiBuilder.crud;
-
-import java.util.Map;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import static io.javalin.apibuilder.ApiBuilder.get;
 
 import io.github.fontysvenlo.ais.businesslogic.BusinessLogicAPI;
 import io.javalin.Javalin;
