@@ -19,9 +19,12 @@ import io.github.fontysvenlo.ais.restapi.ServerConfig;
  * This example test is testing the whole backend, including a test database.
  * (Even though the test database is not used yet.)
  * We do inject our own configuration objects rather than reading them from properties files.
+ *
+ * We use Rest Assured to write the integrated tests, which allows us to use Given-When-Then.
+ *
  */
 public class ApplicationTest {
-    private static final int PORT = 7070;
+    private static final int PORT = 7071;
 
     private static final PostgreSQLContainer<?> postgres = new PostgreSQLContainer<>("postgres:16-alpine")
         .withDatabaseName("test")
@@ -69,7 +72,7 @@ public class ApplicationTest {
     }
 
     @Test
-    void testAddingACustomer() {
+    void testAddingACustomer201() {
         given()
             .contentType("application/json")
             .body("{\"firstName\":\"John\",\"lastName\":\"Doe\",\"dateOfBirth\":\"2025-01-01\"}")

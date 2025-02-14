@@ -74,6 +74,7 @@ is longer, and the number of expected changes and / or extensions becomes bigger
  ** *RestAPI Layer* - Presenting information and interact with external systems (such as a web page)
  ** *Business Logic Layer* - Modeling the real world, the business and its business rules in a
  ** *Persistence Layer* - For Storing data
+ ** *Assembler Layer* - To wire up the layers and to provide the entry point of the application
 
 * Program against interfaces, instead of implementations
 
@@ -210,7 +211,7 @@ Create a new module in your AIS-project, and add a dependency to the Javalin fra
 
 image::AISClassDiagram2.svg[Class diagram after 2nd step]
 
-* Connect the Server to the Business Logic.
+* Connect the APIServer to the Business Logic.
 
 +
 --
@@ -222,13 +223,12 @@ We might need to add or change to a GraphQL API, gRPC or something that doesn't 
 
 So, the RestAPI is a component that uses the BusinessLogic, a Dependent-On-Component. But we want the RestAPI to be testable without the details of the BusinessLogic, and we want the BusinessLogic to be testable without the details of the RestAPI. We can do by injecting the BusinessLogic into the RestAPI. The RestAPI should only know the interface of the BusinessLogic, not the actual implementation. This way, we we can test the RestAPI with a mock implementation of the BusinessLogic.
 
-However, there is one exception in our design: we need something that acts as an entry point for our application, what starts the server, a 'main' method. Lets call this our 'RESTServer'. As this is specific to the RestAPI, we put it under the RestAPI module.
-We can already set up a main method that starts a Javalin server and can listen to a request (see javalin.io documentation).
+However, there is one exception in our design: we need something that acts as an entry point for our application, what starts the server, a 'main' method. Lets call this our 'Assembler'.
 
 So, what do we need to do next? (the steps will be explained in detail below):
 
 * Provide the BusinessLogic with an API.
-* Connect the BusinessLogicAPI in the RestAPI.
+* Connect the BusinessLogicAPI to the RestAPI in the Assembler.
 
 --
 +
@@ -254,7 +254,7 @@ we encapsulate them in a separate new module of your AIS-project. So, within you
 Make sure that your GUI module has access to the layer it depends on: the BusinessLogic layer. Either:
 
 * In NetBeans project GUI, right-click 'Dependencies' and select 'Add dependency...'. Here you can add a dependency to the BusinessLogic project.
-* In any editor, add the dependency to the pom.xml file of the RestAPI project:
+* In any editor, add the dependency to the pom.xml file of the `RestAPI` project:
 
 +
 ---
@@ -273,22 +273,26 @@ Make sure that your GUI module has access to the layer it depends on: the Busine
 +
 
 
-* Connecting everything in the application entry point (RESTServer).
+* Connecting everything in the application entry point (`Assembler`).
 
 +
 --
-The starting point of your application. As mentioned, responsibility is to setup layers and to connect them. Somehow, the RESTServer must get an implementation of the BusinessLogicAPI. Like before, the BusinessLogic should provide this but should also be careful to expose this private part. Therefore, in the BusinessLogic layer, we create a new interface called BusinessLogicFactory. This interface with a static method 'getImplementation()' returns an object that
-is an implementation of the BusinessLogicAPI. Afterwards it creates an instance of a javalin server app and passes the just retrieved
-BusinessLogicAPI object as parameter to the controllers (that handle each request) (dependency injection).
+The starting point of your application. As mentioned, responsibility is to setup layers and to connect them. Somehow, the `Assembler` must get an implementation of the `BusinessLogicAPI`. Like before, the BusinessLogic should provide this but should also be careful to expose this private part. Therefore, in the BusinessLogic layer, we create a new interface called `BusinessLogicFactory`. This interface with a static method 'getImplementation()' returns an object that
+is an implementation of the `BusinessLogicAPI`. Afterwards it creates an instance of a javalin server app and passes the just retrieved
+`BusinessLogicAPI` object as parameter to the controllers (that handle each request) (dependency injection).
 --
 +
 
-* Inject the BusinessLogicAPI object in the presentation layer.
+* Inject the `BusinessLogicAPI` object in the presentation layer.
 
 +
 --
-We want to keep the RESTServer as small as possible, as this is the entry point of our application - and is more difficult to test than other parts of the application (it has a dependency on almost every other part).
-To make the handling of requests more manageable (and testable), we create a new class called CustomerController. This class is responsible for handling requests related to customers. It has a constructor that takes a BusinessLogicAPI object as parameter. This way, the RESTServer can create a new instance of the CustomerController and pass the BusinessLogicAPI object to it.
+We want to keep the `Assembler` as small as possible, as this is the entry point of our application - and is more difficult to test than other parts of the application (it has a dependency on almost every other part).
+
+Our `APIServer` is responsible for setting up the server and handling requests.  To make the handling of requests more manageable (and testable), we create a new class called `CustomerController`. This class is responsible for handling requests related to customers. It has a constructor that takes a `BusinessLogicAPI` object as parameter. This way, the APIServer can create a new instance of the `CustomerController` and pass the `BusinessLogicAPI` object to it.
+
+[NOTE]
+For convenience, we implemented our `CustomerController` using the `CrudHandler`` - https://javalin.io/documentation#handler-groups - provided by Javalin.
 
 --
 +
@@ -306,9 +310,9 @@ A Dependent-On-Component again! (compare to the REST API that depends on the Bus
 this service itself! If it would do, the BusinessLogic would be tightly coupled. When we do testing, there is no way to
 test its interaction with the Persistence layer without using the real implementation of that Persistence layer. The BusinessLogic
 should only talk to the Persistence interface (let's call it the PersistenceAPI) and get an actual implementation injected. (History repeats itself!) The Persistence layer should act as service for the BusinessLogic exactly like how the BusinessLogic layer acted as service
-for the RestAPI-layer. The RESTServer can inject the PersistenceAPI implementation in the BusinessLogic. The persistence layer does not
+for the RestAPI-layer. The `Assembler` can inject the PersistenceAPI implementation in the BusinessLogic. The persistence layer does not
 need to have any knowledge of the BusinessLogic layer. In the persistence project, we create the PersistenceAPI interface, a
-PersistenceAPIImpl class providing an implementation of this interface and a PersistenceFactory that can be used externally.
+`PersistenceAPIImpl` class providing an implementation of this interface and a `PersistenceFactory` that can be used externally.
 
 Be careful, two details we should take care of:
 
@@ -317,7 +321,7 @@ This is fine.
 
 * Since we have a persistence layer now, we should avoid having an in-memory database at the same time. This will cause issues,
 since it's difficult to keep your in-memory database always exactly in sync with your on-disk storage. Therefore remove the
-cache function from the CustomerManagerImpl class.
+cache function from the `CustomerManagerImpl` class.
 
 --
 +
@@ -325,9 +329,10 @@ cache function from the CustomerManagerImpl class.
 image::AISClassDiagram4.svg[Final class diagram]
 
 
-=== DBConfig
+=== DBConfig, ServerConfig
 The way the persistence layer is different from the business layer, is that our persistence layer is dependent on the environment it runs in. The persistence layer needs to know how to connect to the database. This is typically done by providing a configuration file. In the PersistenceAPIImpl class, we create a record called `DBConfig` that we can pass into the Factory to provide the layer from necessary information to connect to the database(s).
-On application-level, a common way of storing known configurations is to use a .properties file. So our RESTServer will be responsible for reading this file and passing it in a structured way into the Persistence Layer.
+In a similar way the RestAPI can be configured by providing a `ServerConfig` record.
+On application-level, a common way of storing known configurations is to use a .properties file. So our Assembler will be responsible for reading this file and passing it in a structured way into the Persistence Layer.
 
 == Some remarks...
 
@@ -346,10 +351,12 @@ you might want to make it more generic using Generic Types, and at some point yo
 get an objects' fields, their data types and their values (typical things you need to store and retrieve data from a database).
 Goal is to end up with less and well readable and well testable code. Allow yourself to further optimize your implementation step-by-step. Don't worry, refactoring is often necessary: https://youtube.com/watch?v=vqEg37e4Mkw&feature=share[Martin Fowler on refactoring]
 
-* In the demo project, we've added examples tests:
-    - The Persistence layer - has an example test to start a real database (in a container, using testcontainers (https://testcontainers.com/)) and test the implementation against it. (NOTE: the demo project uses hard-coded values and doesn't connect with the actual database).
+* In the demo project, we've added example tests. It's up to you to add more tests on different layers.
+    - The Assembler layer - has an example integrated test, that uses a real database (using testcontainers - https://testcontainers.com/) and starts the server in a thread and then tests it via HTTP requests (using RestAssured - https://rest-assured.io/). NOTE: the demo project uses hard-coded values and doesn't connect with the actual database yet. You might want to seed the database later on (using `.withInitScript()` in the testcontainers setup).
+    - The Persistence layer - Similar to the Assembler layer test, but without a server and business logic. It tests the actual implementation of the Persistence layer.
     - The REST API layer - has an example test, in isolation, shows you how to test the behavior of the controller, without testing the actual implementation of the BusinessLogic layer.
     - The DataRecords - DataRecords themselves have no behavior, which is an argument for not testing them (directly).
     - The Business Layer - The demo project does not contain tests for the BusinessLogic layer. This is something you should add yourself.
+
 
 * There is file `.github/workflows/verify.yml`, which contains a GitHub Actions workflow that runs the tests on every push to the repository. This is a good practice to ensure that your code is always in a working state. You can find more information about GitHub Actions at https://docs.github.com/en/actions.

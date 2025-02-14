@@ -11,6 +11,11 @@ import java.util.logging.Logger;
  */
 public class PropertiesLoader {
     /**
+     * Private constructor to prevent instantiation.
+     */
+    private PropertiesLoader() {}
+
+    /**
      * Loads a properties file from the classpath.
      * @param resourceFileName the name of the properties file. This file should be located in the resources folder.
      * @return the properties loaded from the file

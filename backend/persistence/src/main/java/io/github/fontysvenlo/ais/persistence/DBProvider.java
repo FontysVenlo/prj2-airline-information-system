@@ -9,6 +9,11 @@ import org.postgresql.ds.PGSimpleDataSource;
  * Provides DataSources for the database connection.
  */
 public class DBProvider {
+    /**
+     * Private constructor to prevent instantiation.
+     */
+    private DBProvider() {}
+
     static Map<String, DataSource> cache = new HashMap<>();
 
     static DataSource getDataSource(final DBConfig config) {

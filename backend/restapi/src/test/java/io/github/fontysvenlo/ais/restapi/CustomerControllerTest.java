@@ -30,7 +30,7 @@ public class CustomerControllerTest {
     }
 
     @Test
-    public void testGetCustomers200() {
+    public void testGetAllCustomers200() {
         // Arrange
         when(customerManager.list()).thenReturn(new ArrayList<>());
 
