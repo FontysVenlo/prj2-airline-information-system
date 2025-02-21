@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>io.github.fontysvenlo</groupId>
+        <artifactId>informaticspom</artifactId>
+        <version>1.5</version>
+        <relativePath/>
+    </parent>
+    <groupId>io.github.fontysvenlo.ais</groupId>
+    <artifactId>airlineinformationsystem</artifactId>
+    <version>1.0-SNAPSHOT</version>
+    <packaging>pom</packaging>
+    <modules>
+        <module>businesslogic</module>
+        <module>datarecords</module>
+        <module>persistence</module>
+        <module>restapi</module>
+        <module>assembler</module>
+    </modules>
+    <properties>
+        <compiler-plugin.version>3.13.0</compiler-plugin.version>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+        <maven.compiler.source>21</maven.compiler.source>
+        <maven.compiler.target>21</maven.compiler.target>
+        <maven.compiler.release>21</maven.compiler.release>
+
+        <surefire-plugin.version>3.5.0</surefire-plugin.version>
+        <compiler-plugin.version>3.13.0</compiler-plugin.version>
+    </properties>
+
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>org.testcontainers</groupId>
+                <artifactId>testcontainers-bom</artifactId>
+                <version>1.20.4</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+</project>
