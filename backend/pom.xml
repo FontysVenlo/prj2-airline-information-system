@@ -17,6 +17,7 @@
         <module>persistence</module>
         <module>restapi</module>
         <module>assembler</module>
+        <module>persistence-api</module>
     </modules>
     <properties>
         <compiler-plugin.version>3.13.0</compiler-plugin.version>

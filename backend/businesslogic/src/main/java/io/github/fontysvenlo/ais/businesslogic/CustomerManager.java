@@ -3,7 +3,7 @@ package io.github.fontysvenlo.ais.businesslogic;
 import java.util.List;
 
 import io.github.fontysvenlo.ais.datarecords.CustomerData;
-import io.github.fontysvenlo.ais.persistence.CustomerRepository;
+import io.github.fontysvenlo.ais.persistence.api.CustomerRepository;
 
 
 /**

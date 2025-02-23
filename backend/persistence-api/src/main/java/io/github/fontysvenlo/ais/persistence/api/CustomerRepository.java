@@ -1,4 +1,4 @@
-package io.github.fontysvenlo.ais.persistence;
+package io.github.fontysvenlo.ais.persistence.api;
 
 import io.github.fontysvenlo.ais.datarecords.CustomerData;
 import java.util.List;

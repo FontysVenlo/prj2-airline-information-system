@@ -1,5 +1,7 @@
 package io.github.fontysvenlo.ais.persistence;
 
+import io.github.fontysvenlo.ais.persistence.api.PersistenceAPI;
+
 /**
  * Factory to provide PersistenceAPI implementation.
  */

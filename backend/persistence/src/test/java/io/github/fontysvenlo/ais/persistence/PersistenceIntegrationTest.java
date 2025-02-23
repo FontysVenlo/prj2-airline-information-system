@@ -1,5 +1,8 @@
 package io.github.fontysvenlo.ais.persistence;
 
+import io.github.fontysvenlo.ais.persistence.api.PersistenceAPI;
+import io.github.fontysvenlo.ais.persistence.api.CustomerRepository;
+
 import java.time.LocalDate;
 import java.util.List;
 

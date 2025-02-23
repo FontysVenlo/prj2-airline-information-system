@@ -1,6 +1,6 @@
 package io.github.fontysvenlo.ais.businesslogic;
 
-import io.github.fontysvenlo.ais.persistence.PersistenceAPI;
+import io.github.fontysvenlo.ais.persistence.api.PersistenceAPI;
 
 /**
  * Factory to provide BusinessLogicAPI implementation.
