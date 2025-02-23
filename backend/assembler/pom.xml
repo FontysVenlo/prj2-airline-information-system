@@ -39,5 +39,15 @@
             <artifactId>persistence-api</artifactId>
             <version>${project.version}</version>
         </dependency>
+        <dependency>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>businesslogic-api</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>businesslogic</artifactId>
+            <version>${project.version}</version>
+        </dependency>
     </dependencies>
 </project>

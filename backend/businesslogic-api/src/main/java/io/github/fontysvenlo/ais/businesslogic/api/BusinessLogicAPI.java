@@ -1,4 +1,4 @@
-package io.github.fontysvenlo.ais.businesslogic;
+package io.github.fontysvenlo.ais.businesslogic.api;
 
 /**
  * API of the BusinessLogic layer.

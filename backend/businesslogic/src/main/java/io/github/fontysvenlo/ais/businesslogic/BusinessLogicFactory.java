@@ -1,5 +1,6 @@
 package io.github.fontysvenlo.ais.businesslogic;
 
+import io.github.fontysvenlo.ais.businesslogic.api.BusinessLogicAPI;
 import io.github.fontysvenlo.ais.persistence.api.PersistenceAPI;
 
 /**
