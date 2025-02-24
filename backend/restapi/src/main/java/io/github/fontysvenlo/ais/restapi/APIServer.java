@@ -38,7 +38,7 @@ public class APIServer {
                 });
             });
             config.router.apiBuilder(() -> {
-                crud("customers/{customer-id}", new CustomerResource(businessLogic));
+                crud("customers/{customer-id}", new CustomerResource(businessLogic.getCustomerManager()));
             });
         });
 

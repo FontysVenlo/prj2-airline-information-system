@@ -1,23 +1,22 @@
 package io.github.fontysvenlo.ais.restapi;
 
-import com.fasterxml.jackson.databind.JsonMappingException;
 import io.javalin.http.Context;
 import io.javalin.apibuilder.CrudHandler;
 
 import io.github.fontysvenlo.ais.datarecords.CustomerData;
-import io.github.fontysvenlo.ais.businesslogic.api.BusinessLogic;
+import io.github.fontysvenlo.ais.businesslogic.api.CustomerManager;
 
 /**
  * This class is responsible for handling the requests for the customer resource.
  */
 class CustomerResource implements CrudHandler {
-    final private BusinessLogic businessLogic;
+    final private CustomerManager customerManager;
 
     /**
      * Initializes the controller with the business logic.
      */
-    CustomerResource(BusinessLogic businessLogic) {
-        this.businessLogic = businessLogic;
+    CustomerResource(CustomerManager customerManager) {
+        this.customerManager = customerManager;
     }
 
     /**
@@ -33,7 +32,7 @@ class CustomerResource implements CrudHandler {
             return;
         }
         context.status(201);
-        context.json(businessLogic.getCustomerManager().add(customerData));
+        context.json(customerManager.add(customerData));
     }
 
     /**
@@ -43,7 +42,7 @@ class CustomerResource implements CrudHandler {
     @Override
     public void getAll(Context context) {
         context.status(200);
-        context.json(businessLogic.getCustomerManager().list());
+        context.json(customerManager.list());
     }
 
     @Override

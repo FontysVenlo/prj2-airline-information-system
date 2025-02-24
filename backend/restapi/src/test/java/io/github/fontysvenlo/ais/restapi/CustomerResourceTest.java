@@ -19,14 +19,14 @@ public class CustomerResourceTest {
 
     private BusinessLogic businessLogic;
     private CustomerManager customerManager;
-    private CustomerResource customerController;
+    private CustomerResource customerResource;
 
     @BeforeEach
     public void setup() {
         businessLogic = mock(BusinessLogic.class);
         customerManager = mock(CustomerManager.class);
         when(businessLogic.getCustomerManager()).thenReturn(customerManager);
-        customerController = new CustomerResource(businessLogic);
+        customerResource = new CustomerResource(customerManager);
     }
 
     @Test
@@ -35,7 +35,7 @@ public class CustomerResourceTest {
         when(customerManager.list()).thenReturn(new ArrayList<>());
 
         // Act
-        customerController.getAll(context);
+        customerResource.getAll(context);
 
         // Assert
         verify(context).status(200);
@@ -49,7 +49,7 @@ public class CustomerResourceTest {
         when(context.bodyAsClass(CustomerData.class)).thenReturn(customerData);
 
         // Act
-        customerController.create(context);
+        customerResource.create(context);
 
         // Assert
         verify(context).status(201);
@@ -62,7 +62,7 @@ public class CustomerResourceTest {
         when(context.body()).thenReturn(null);
 
         // Act
-        customerController.create(context);
+        customerResource.create(context);
 
         // Assert
         verify(context).status(400);
