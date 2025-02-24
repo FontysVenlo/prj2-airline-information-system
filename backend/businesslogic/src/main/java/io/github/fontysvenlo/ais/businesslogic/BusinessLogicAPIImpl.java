@@ -1,6 +1,8 @@
 package io.github.fontysvenlo.ais.businesslogic;
 
-import io.github.fontysvenlo.ais.persistence.PersistenceAPI;
+import io.github.fontysvenlo.ais.businesslogic.api.BusinessLogicAPI;
+import io.github.fontysvenlo.ais.businesslogic.api.CustomerManager;
+import io.github.fontysvenlo.ais.persistence.api.PersistenceAPI;
 
 /**
  * Actual business logic implementation.
@@ -23,6 +25,6 @@ class BusinessLogicAPIImpl implements BusinessLogicAPI {
      */
     @Override
     public CustomerManager getCustomerManager() {
-        return new CustomerManager(persistenceAPI.getCustomerRepository());
+        return new CustomerManagerImpl(persistenceAPI.getCustomerRepository());
     }
 }

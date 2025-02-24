@@ -3,7 +3,7 @@ package io.github.fontysvenlo.ais.restapi;
 import static io.javalin.apibuilder.ApiBuilder.crud;
 import static io.javalin.apibuilder.ApiBuilder.get;
 
-import io.github.fontysvenlo.ais.businesslogic.BusinessLogicAPI;
+import io.github.fontysvenlo.ais.businesslogic.api.BusinessLogicAPI;
 import io.javalin.Javalin;
 
 

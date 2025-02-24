@@ -2,11 +2,13 @@ package io.github.fontysvenlo.ais.assembler;
 
 import java.util.Properties;
 
-import io.github.fontysvenlo.ais.businesslogic.BusinessLogicAPI;
-import io.github.fontysvenlo.ais.businesslogic.BusinessLogicFactory;
-
+import io.github.fontysvenlo.ais.persistence.api.PersistenceAPI;
 import io.github.fontysvenlo.ais.persistence.DBConfig;
 import io.github.fontysvenlo.ais.persistence.PersistenceFactory;
+
+import io.github.fontysvenlo.ais.businesslogic.api.BusinessLogicAPI;
+import io.github.fontysvenlo.ais.businesslogic.BusinessLogicFactory;
+
 import io.github.fontysvenlo.ais.restapi.APIServer;
 import io.github.fontysvenlo.ais.restapi.ServerConfig;
 
@@ -25,7 +27,10 @@ public class Assembler {
      * @param serverConfig the server configuration
      */
     public static void start(DBConfig dbConfig, ServerConfig serverConfig) {
-        BusinessLogicAPI businessLogic = BusinessLogicFactory.getImplementation(PersistenceFactory.getImplementation(dbConfig));
+        
+        PersistenceAPI persistence = PersistenceFactory.getImplementation(dbConfig);
+        
+        BusinessLogicAPI businessLogic = BusinessLogicFactory.getImplementation(persistence);
 
         APIServer restServer = new APIServer(businessLogic);
         restServer.start(serverConfig);

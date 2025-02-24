@@ -1,5 +1,8 @@
 package io.github.fontysvenlo.ais.persistence;
 
+import io.github.fontysvenlo.ais.persistence.api.CustomerRepository;
+import io.github.fontysvenlo.ais.persistence.api.PersistenceAPI;
+
 /**
  * Actual creator of storage services.
  */

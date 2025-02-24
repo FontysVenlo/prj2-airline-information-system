@@ -1,4 +1,4 @@
-package io.github.fontysvenlo.ais.persistence;
+package io.github.fontysvenlo.ais.persistence.api;
 
 /**
  * API for the persistence layer. Provides access to repositories.
@@ -18,8 +18,8 @@ public interface PersistenceAPI {
         return null;
     }
 
-    // This interface can be extended with all services that need to be made
-    // available to the business logic, e.g. to store Products:
+    // This interface can be extended with other repositories that need to be made
+    // available to the business logic, e.g. to manage flights:
     //
-    // ProductStorageService getProductStorageService( );
+    //FlightRepository getFlightRepository();
 }

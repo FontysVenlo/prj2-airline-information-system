@@ -12,9 +12,11 @@
     <version>1.0-SNAPSHOT</version>
     <packaging>pom</packaging>
     <modules>
-        <module>businesslogic</module>
         <module>datarecords</module>
         <module>persistence</module>
+        <module>persistence-api</module>
+        <module>businesslogic</module>
+        <module>businesslogic-api</module>
         <module>restapi</module>
         <module>assembler</module>
     </modules>
@@ -29,7 +31,6 @@
         <surefire-plugin.version>3.5.0</surefire-plugin.version>
         <compiler-plugin.version>3.13.0</compiler-plugin.version>
     </properties>
-
     <dependencyManagement>
         <dependencies>
             <dependency>

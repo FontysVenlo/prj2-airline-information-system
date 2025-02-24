@@ -4,7 +4,7 @@ import com.fasterxml.jackson.databind.JsonMappingException;
 import io.javalin.http.Context;
 import io.javalin.apibuilder.CrudHandler;
 
-import io.github.fontysvenlo.ais.businesslogic.BusinessLogicAPI;
+import io.github.fontysvenlo.ais.businesslogic.api.BusinessLogicAPI;
 import io.github.fontysvenlo.ais.datarecords.CustomerData;
 
 /**

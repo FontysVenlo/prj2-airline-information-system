@@ -3,7 +3,7 @@
  */
 module restapi_module {
 
-    requires businesslogic_module;
+    requires businesslogic_api_module;
     requires datarecords_module;
 
     requires java.logging;

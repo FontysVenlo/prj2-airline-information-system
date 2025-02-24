@@ -9,8 +9,8 @@ import java.util.ArrayList;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import io.github.fontysvenlo.ais.businesslogic.BusinessLogicAPI;
-import io.github.fontysvenlo.ais.businesslogic.CustomerManager;
+import io.github.fontysvenlo.ais.businesslogic.api.BusinessLogicAPI;
+import io.github.fontysvenlo.ais.businesslogic.api.CustomerManager;
 import io.github.fontysvenlo.ais.datarecords.CustomerData;
 import io.javalin.http.Context;
 
