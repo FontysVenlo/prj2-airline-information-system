@@ -2,15 +2,15 @@ package io.github.fontysvenlo.ais.assembler;
 
 import java.util.Properties;
 
-import io.github.fontysvenlo.ais.persistence.api.PersistenceAPI;
 import io.github.fontysvenlo.ais.persistence.DBConfig;
 import io.github.fontysvenlo.ais.persistence.PersistenceFactory;
 
-import io.github.fontysvenlo.ais.businesslogic.api.BusinessLogicAPI;
 import io.github.fontysvenlo.ais.businesslogic.BusinessLogicFactory;
 
 import io.github.fontysvenlo.ais.restapi.APIServer;
 import io.github.fontysvenlo.ais.restapi.ServerConfig;
+import io.github.fontysvenlo.ais.businesslogic.api.BusinessLogic;
+import io.github.fontysvenlo.ais.persistence.api.Persistence;
 
 /**
  * The Assembler class starts different layers of the application and connects them.
@@ -28,11 +28,12 @@ public class Assembler {
      */
     public static void start(DBConfig dbConfig, ServerConfig serverConfig) {
         
-        PersistenceAPI persistence = PersistenceFactory.getImplementation(dbConfig);
+        Persistence persistence = PersistenceFactory.getInstance(dbConfig);
         
-        BusinessLogicAPI businessLogic = BusinessLogicFactory.getImplementation(persistence);
+        BusinessLogic businessLogic = BusinessLogicFactory.getInstance(persistence);
 
         APIServer restServer = new APIServer(businessLogic);
+        
         restServer.start(serverConfig);
     }
 

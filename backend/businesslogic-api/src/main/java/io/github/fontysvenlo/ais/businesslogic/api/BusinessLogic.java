@@ -3,7 +3,7 @@ package io.github.fontysvenlo.ais.businesslogic.api;
 /**
  * API of the BusinessLogic layer.
  */
-public interface BusinessLogicAPI {
+public interface BusinessLogic {
 
     /**
      * Get the CustomerManager.

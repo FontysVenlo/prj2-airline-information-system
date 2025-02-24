@@ -4,15 +4,17 @@ import java.util.Properties;
 
 /**
  * Represents the configuration of the REST API server.
+ * @param allowhostport The cors allowed port 
  * @param port The port to bind the server to
  */
-public record ServerConfig(int port) {
+public record ServerConfig(int allowhostport, int port) {
     /**
      * Creates a ServerConfig object from a Properties object.
      * @param properties the properties object to create the ServerConfig from
      * @return the created ServerConfig object
      */
     public static ServerConfig fromProperties(Properties properties) {
-        return new ServerConfig(Integer.parseInt(properties.getProperty("server.port")));
+        return new ServerConfig(Integer.parseInt(properties.getProperty("server.allowhostport")),
+                Integer.parseInt(properties.getProperty("server.port")));
     }
 }

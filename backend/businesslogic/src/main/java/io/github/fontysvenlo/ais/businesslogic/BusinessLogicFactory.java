@@ -1,19 +1,26 @@
 package io.github.fontysvenlo.ais.businesslogic;
 
-import io.github.fontysvenlo.ais.businesslogic.api.BusinessLogicAPI;
-import io.github.fontysvenlo.ais.persistence.api.PersistenceAPI;
+import io.github.fontysvenlo.ais.businesslogic.api.BusinessLogic;
+import io.github.fontysvenlo.ais.persistence.api.Persistence;
 
 /**
  * Factory to provide BusinessLogicAPI implementation.
  */
-public interface BusinessLogicFactory {
+public class BusinessLogicFactory {
+    
     /**
-     * Get the implementation of the BusinessLogicAPI.
-     * @param persistenceAPI the PersistenceAPI
-     * @return the implementation of the BusinessLogicAPI
+     * Private constructor.
      */
-    static BusinessLogicAPI getImplementation( PersistenceAPI persistenceAPI ){
-        return new BusinessLogicAPIImpl( persistenceAPI );
+    private BusinessLogicFactory(){
+    }
+
+    /**
+     * Get the implementation of the BusinessLogic API.
+     * @param persistenceAPI the PersistenceAPI
+     * @return the implementation of the BusinessLogic API
+     */
+    public static BusinessLogic getInstance(Persistence persistenceAPI) {
+        return new BusinessLogicImpl( persistenceAPI );
     }
 
 }

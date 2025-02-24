@@ -9,24 +9,24 @@ import java.util.ArrayList;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import io.github.fontysvenlo.ais.businesslogic.api.BusinessLogicAPI;
 import io.github.fontysvenlo.ais.businesslogic.api.CustomerManager;
 import io.github.fontysvenlo.ais.datarecords.CustomerData;
 import io.javalin.http.Context;
+import io.github.fontysvenlo.ais.businesslogic.api.BusinessLogic;
 
-public class CustomerControllerTest {
+public class CustomerResourceTest {
     private final Context context = mock(Context.class);
 
-    private BusinessLogicAPI businessLogic;
+    private BusinessLogic businessLogic;
     private CustomerManager customerManager;
-    private CustomerController customerController;
+    private CustomerResource customerController;
 
     @BeforeEach
     public void setup() {
-        businessLogic = mock(BusinessLogicAPI.class);
+        businessLogic = mock(BusinessLogic.class);
         customerManager = mock(CustomerManager.class);
         when(businessLogic.getCustomerManager()).thenReturn(customerManager);
-        customerController = new CustomerController(businessLogic);
+        customerController = new CustomerResource(businessLogic);
     }
 
     @Test

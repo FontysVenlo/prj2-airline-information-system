@@ -1,17 +1,24 @@
 package io.github.fontysvenlo.ais.persistence;
 
-import io.github.fontysvenlo.ais.persistence.api.PersistenceAPI;
+import io.github.fontysvenlo.ais.persistence.api.Persistence;
 
 /**
  * Factory to provide PersistenceAPI implementation.
  */
-public interface PersistenceFactory {
+public class PersistenceFactory {
+    
     /**
-     * Get the implementation of the PersistenceAPI.
-     * @param config the configuration of the database
-     * @return the implementation of the PersistenceAPI
+     * Private constructor.
      */
-    static PersistenceAPI getImplementation(DBConfig config) {
-        return new PersistenceAPIImpl(config);
+    private PersistenceFactory() {
+    }
+
+    /**
+     * Get the implementation of the Persistence API.
+     * @param config the configuration of the database
+     * @return the implementation of the Persistence API
+     */
+    public static Persistence getInstance(DBConfig config) {
+        return new PersistenceImpl(config);
     }
 }

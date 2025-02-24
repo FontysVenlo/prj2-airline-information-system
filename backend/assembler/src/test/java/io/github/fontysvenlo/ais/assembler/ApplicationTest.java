@@ -24,6 +24,7 @@ import io.github.fontysvenlo.ais.restapi.ServerConfig;
  *
  */
 public class ApplicationTest {
+    
     private static final int PORT = 7071;
 
     private static final PostgreSQLContainer<?> postgres = new PostgreSQLContainer<>("postgres:16-alpine")
@@ -40,7 +41,7 @@ public class ApplicationTest {
 
         // Start the assembler in a separate thread
         DBConfig dbConfig = new DBConfig("test", postgres.getHost(), postgres.getFirstMappedPort(), "test", "ais", "test", "test");
-        ServerConfig serverConfig = new ServerConfig(PORT);
+        ServerConfig serverConfig = new ServerConfig(0, PORT);
         serverThread = new Thread(() -> Assembler.start(dbConfig, serverConfig));
         serverThread.start();
         org.testcontainers.Testcontainers.exposeHostPorts(serverConfig.port());

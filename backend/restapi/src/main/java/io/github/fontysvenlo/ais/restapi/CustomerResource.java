@@ -4,19 +4,19 @@ import com.fasterxml.jackson.databind.JsonMappingException;
 import io.javalin.http.Context;
 import io.javalin.apibuilder.CrudHandler;
 
-import io.github.fontysvenlo.ais.businesslogic.api.BusinessLogicAPI;
 import io.github.fontysvenlo.ais.datarecords.CustomerData;
+import io.github.fontysvenlo.ais.businesslogic.api.BusinessLogic;
 
 /**
  * This class is responsible for handling the requests for the customer resource.
  */
-class CustomerController implements CrudHandler {
-    final private BusinessLogicAPI businessLogic;
+class CustomerResource implements CrudHandler {
+    final private BusinessLogic businessLogic;
 
     /**
      * Initializes the controller with the business logic.
      */
-    CustomerController(BusinessLogicAPI businessLogic) {
+    CustomerResource(BusinessLogic businessLogic) {
         this.businessLogic = businessLogic;
     }
 

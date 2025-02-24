@@ -1,23 +1,22 @@
 package io.github.fontysvenlo.ais.restapi;
 
 import static io.javalin.apibuilder.ApiBuilder.crud;
-import static io.javalin.apibuilder.ApiBuilder.get;
 
-import io.github.fontysvenlo.ais.businesslogic.api.BusinessLogicAPI;
 import io.javalin.Javalin;
+import io.github.fontysvenlo.ais.businesslogic.api.BusinessLogic;
 
 
 /**
  * This class is responsible for starting the REST server and defining the routes.
  */
 public class APIServer {
-    private final BusinessLogicAPI businessLogic;
+    private final BusinessLogic businessLogic;
 
     /**
      * Initializes the REST API server
      * @param businessLogic the business logic implementation to communicate with
      */
-    public APIServer(BusinessLogicAPI businessLogic) {
+    public APIServer(BusinessLogic businessLogic) {
         this.businessLogic = businessLogic;
     }
 
@@ -30,11 +29,11 @@ public class APIServer {
             config.router.contextPath = "/api/v1";
             config.bundledPlugins.enableCors(cors -> {
                 cors.addRule(it -> {
-                    it.allowHost("http://localhost:" + configuration.port(), "127.0.0.1:5173" + configuration.port());
+                    it.allowHost("http://localhost:" + configuration.allowhostport(), "127.0.0.1:" + configuration.allowhostport());
                 });
             });
             config.router.apiBuilder(() -> {
-                crud("customers/{customer-id}", new CustomerController(businessLogic));
+                crud("customers/{customer-id}", new CustomerResource(businessLogic));
             });
         });
 
