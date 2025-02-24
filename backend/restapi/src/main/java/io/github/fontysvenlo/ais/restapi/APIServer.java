@@ -30,7 +30,7 @@ public class APIServer {
             config.router.contextPath = "/api/v1";
             config.bundledPlugins.enableCors(cors -> {
                 cors.addRule(it -> {
-                    it.allowHost("http://localhost:" + configuration.port(), "127.0.0.1:5173" + configuration.port());
+                    it.allowHost("http://localhost:" + configuration.cors(), "127.0.0.1:" + configuration.cors());
                 });
             });
             config.router.apiBuilder(() -> {
