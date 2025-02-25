@@ -14,6 +14,9 @@ public class Customer {
      * @param customerData the customer data
      */
     public Customer(CustomerData customerData) {
+        if (customerData.firstName().isBlank() || customerData.firstName().length() < 2) {
+            throw new IllegalArgumentException("Customer first name is not allowed to be empty or less than 2 characters");
+        }
         this.customerData = customerData;
     }
 

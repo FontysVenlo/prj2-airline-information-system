@@ -31,6 +31,8 @@ public class CustomerManagerImpl implements CustomerManager{
      */
     @Override
     public CustomerData add( CustomerData customerData ){
+        // Validate
+        Customer customer = new Customer(customerData);
         return customerRepository.add(customerData);
     }
 
