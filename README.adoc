@@ -116,7 +116,7 @@ as well. Moral of the story? We have to find a balance between making things fle
 With the demo application in this repository, you have received a (hopefully) working starting point for your project. HOWEVER... it is important is that you are able to setup a project yourself as well. Therefore, the tutorial below describes the way to do it. *We highly recommend that each group tries to setup a working project architecture themselves.* Afterwards, you can start together from scratch again, having gained relevant knowledge. The paragraphs below don't contain all the details; these can be looked up in the example implementation however. Okay, here we go...
 ====
 
-*What's key? Our Business Logic of course!* The persistence layer is only a service that serves the Business Logic Layer by storing object data at any time, and retrieving these on request. From a business point of view not important. The (G)UI or RESTAPI only enable end users to interact with the business logic. From that perspective it's only a passthrough and a messenger; relevant from a software system
+*What's key? Our Business Logic of course!* The persistence layer is only a service that serves the Business Logic Layer by storing object data at any time, and retrieving these on request. From a business point of view not important. The (G)UI or RESTAPI only enables end users to interact with the business logic. From that perspective it's only a passthrough and a messenger; relevant from a software system
 point of view, not from a business point of view. Assume that we want to write an application that is
 able to create, store and retrieve customers. We'll explain the setup step-by-step afterwards.
 
