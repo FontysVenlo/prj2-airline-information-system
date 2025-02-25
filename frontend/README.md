@@ -23,6 +23,9 @@ PUBLIC_API_BASE="http://localhost:8080/api/v1"
 4. Start the frontend application `npm run dev`, this will start a server and watch for any file changes. All changes will autoupdate the application and are immediately visible.
 5. Go to http://localhost:5173 and you should see a simple starter application
 
+> [!IMPORTANT]
+> Please follow the tutorial for SvelteKit [https://svelte.dev/tutorial/kit/introducing-sveltekit](https://svelte.dev/tutorial/kit/introducing-sveltekit)
+
 ## Developing
 
 You are free to develop the frontend in the way you prefer.
