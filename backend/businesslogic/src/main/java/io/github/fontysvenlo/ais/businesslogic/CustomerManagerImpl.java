@@ -14,14 +14,14 @@ import io.github.fontysvenlo.ais.persistence.api.CustomerRepository;
  */
 public class CustomerManagerImpl implements CustomerManager{
 
-    private final CustomerRepository CustomerRepository;
+    private final CustomerRepository customerRepository;
 
     /**
      * Constructor
      * @param CustomerRepository the customer storage service
      */
     public CustomerManagerImpl( CustomerRepository CustomerRepository ) {
-        this.CustomerRepository = CustomerRepository;
+        this.customerRepository = CustomerRepository;
     }
 
     /**
@@ -31,7 +31,7 @@ public class CustomerManagerImpl implements CustomerManager{
      */
     @Override
     public CustomerData add( CustomerData customerData ){
-        return CustomerRepository.add(customerData);
+        return customerRepository.add(customerData);
     }
 
     /**
@@ -40,7 +40,7 @@ public class CustomerManagerImpl implements CustomerManager{
      */
     @Override
     public List<CustomerData> list(){
-        return CustomerRepository.getAll();
+        return customerRepository.getAll();
     }
 
 }

@@ -29,7 +29,7 @@ class CustomerRepositoryImpl implements CustomerRepository {
     }
 
     /**
-     * @see CustomerRepository#getAll(CustomerData)
+     * @see CustomerRepository#getAll()
      */
     @Override
     public List<CustomerData> getAll() {

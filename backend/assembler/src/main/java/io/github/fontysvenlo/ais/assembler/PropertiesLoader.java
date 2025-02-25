@@ -17,7 +17,7 @@ public class PropertiesLoader {
 
     /**
      * Loads a properties file from the classpath.
-     * @param resourceFileName the name of the properties file. This file should be located in the resources folder.
+     * @param resourceFileName the name of the properties file. This file should be located in the resources' folder.
      * @return the properties loaded from the file
      */
     public static Properties loadProperties(String resourceFileName) {
