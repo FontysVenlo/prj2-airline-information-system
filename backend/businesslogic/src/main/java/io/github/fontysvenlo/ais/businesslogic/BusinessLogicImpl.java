@@ -1,21 +1,21 @@
 package io.github.fontysvenlo.ais.businesslogic;
 
-import io.github.fontysvenlo.ais.businesslogic.api.BusinessLogicAPI;
 import io.github.fontysvenlo.ais.businesslogic.api.CustomerManager;
-import io.github.fontysvenlo.ais.persistence.api.PersistenceAPI;
+import io.github.fontysvenlo.ais.businesslogic.api.BusinessLogic;
+import io.github.fontysvenlo.ais.persistence.api.Persistence;
 
 /**
  * Actual business logic implementation.
  */
-class BusinessLogicAPIImpl implements BusinessLogicAPI {
+class BusinessLogicImpl implements BusinessLogic {
 
-    final PersistenceAPI persistenceAPI;
+    final Persistence persistenceAPI;
 
     /**
      * Constructor.
      * @param persistenceAPI the PersistenceAPI
      */
-    BusinessLogicAPIImpl(PersistenceAPI persistenceAPI) {
+    BusinessLogicImpl(Persistence persistenceAPI) {
         this.persistenceAPI = persistenceAPI;
     }
 

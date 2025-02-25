@@ -9,7 +9,6 @@
         <groupId>io.github.fontysvenlo.ais</groupId>
     </parent>
     <artifactId>restapi</artifactId>
-
     <dependencies>
         <dependency>
             <groupId>io.javalin</groupId>
@@ -37,7 +36,6 @@
             <version>${project.version}</version>
         </dependency>
     </dependencies>
-
     <build>
         <plugins>
             <plugin>

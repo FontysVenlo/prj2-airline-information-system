@@ -15,7 +15,4 @@
             <version>${project.version}</version>
         </dependency>
     </dependencies>
-    <properties>
-        <exec.mainClass>io.github.fontysvenlo.ais.persistence.api.PersistenceApi</exec.mainClass>
-    </properties>
 </project>

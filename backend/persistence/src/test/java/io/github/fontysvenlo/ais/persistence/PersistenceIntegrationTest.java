@@ -1,6 +1,5 @@
 package io.github.fontysvenlo.ais.persistence;
 
-import io.github.fontysvenlo.ais.persistence.api.PersistenceAPI;
 import io.github.fontysvenlo.ais.persistence.api.CustomerRepository;
 
 import java.time.LocalDate;
@@ -14,6 +13,7 @@ import org.testcontainers.containers.PostgreSQLContainer;
 import static org.assertj.core.api.Assertions.*;
 
 import io.github.fontysvenlo.ais.datarecords.CustomerData;
+import io.github.fontysvenlo.ais.persistence.api.Persistence;
 
 /**
  * This example test is testing the persistency layer including a test database in a container.
@@ -42,7 +42,7 @@ public class PersistenceIntegrationTest {
     @Test
     void testAddingAndRetrievingCustomers() {
         // Arrange
-        PersistenceAPI persistenceAPI = PersistenceFactory.getImplementation(config);
+        Persistence persistenceAPI = PersistenceFactory.getInstance(config);
         CustomerRepository CustomerRepository = persistenceAPI.getCustomerRepository();
 
         // Act

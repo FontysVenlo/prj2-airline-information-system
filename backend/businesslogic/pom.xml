@@ -9,9 +9,9 @@
     <artifactId>businesslogic</artifactId>
     <dependencies>
         <dependency>
-            <groupId>io.github.fontysvenlo.ais</groupId>
+            <groupId>${project.groupId}</groupId>
             <artifactId>datarecords</artifactId>
-            <version>1.0-SNAPSHOT</version>
+            <version>${project.version}</version>
         </dependency>
         <dependency>
             <groupId>${project.groupId}</groupId>

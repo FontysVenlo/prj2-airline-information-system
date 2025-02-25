@@ -9,24 +9,24 @@ import java.util.ArrayList;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import io.github.fontysvenlo.ais.businesslogic.api.BusinessLogicAPI;
 import io.github.fontysvenlo.ais.businesslogic.api.CustomerManager;
 import io.github.fontysvenlo.ais.datarecords.CustomerData;
 import io.javalin.http.Context;
+import io.github.fontysvenlo.ais.businesslogic.api.BusinessLogic;
 
-public class CustomerControllerTest {
+public class CustomerResourceTest {
     private final Context context = mock(Context.class);
 
-    private BusinessLogicAPI businessLogic;
+    private BusinessLogic businessLogic;
     private CustomerManager customerManager;
-    private CustomerController customerController;
+    private CustomerResource customerResource;
 
     @BeforeEach
     public void setup() {
-        businessLogic = mock(BusinessLogicAPI.class);
+        businessLogic = mock(BusinessLogic.class);
         customerManager = mock(CustomerManager.class);
         when(businessLogic.getCustomerManager()).thenReturn(customerManager);
-        customerController = new CustomerController(businessLogic);
+        customerResource = new CustomerResource(customerManager);
     }
 
     @Test
@@ -35,7 +35,7 @@ public class CustomerControllerTest {
         when(customerManager.list()).thenReturn(new ArrayList<>());
 
         // Act
-        customerController.getAll(context);
+        customerResource.getAll(context);
 
         // Assert
         verify(context).status(200);
@@ -49,7 +49,7 @@ public class CustomerControllerTest {
         when(context.bodyAsClass(CustomerData.class)).thenReturn(customerData);
 
         // Act
-        customerController.create(context);
+        customerResource.create(context);
 
         // Assert
         verify(context).status(201);
@@ -62,7 +62,7 @@ public class CustomerControllerTest {
         when(context.body()).thenReturn(null);
 
         // Act
-        customerController.create(context);
+        customerResource.create(context);
 
         // Assert
         verify(context).status(400);

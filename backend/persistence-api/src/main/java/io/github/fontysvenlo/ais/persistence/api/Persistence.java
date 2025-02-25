@@ -3,7 +3,7 @@ package io.github.fontysvenlo.ais.persistence.api;
 /**
  * API for the persistence layer. Provides access to repositories.
  */
-public interface PersistenceAPI {
+public interface Persistence {
 
     /**
      * Get CustomerRepository. Provides a storage object that knows how to

@@ -1,15 +1,15 @@
 package io.github.fontysvenlo.ais.persistence;
 
 import io.github.fontysvenlo.ais.persistence.api.CustomerRepository;
-import io.github.fontysvenlo.ais.persistence.api.PersistenceAPI;
+import io.github.fontysvenlo.ais.persistence.api.Persistence;
 
 /**
  * Actual creator of storage services.
  */
-class PersistenceAPIImpl implements PersistenceAPI{
+class PersistenceImpl implements Persistence{
     private DBConfig config;
 
-    PersistenceAPIImpl(DBConfig config) {
+    PersistenceImpl(DBConfig config) {
         this.config = config;
     }
 

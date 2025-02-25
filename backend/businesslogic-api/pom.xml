@@ -15,7 +15,4 @@
             <version>${project.version}</version>
         </dependency>
     </dependencies>
-    <properties>
-        <exec.mainClass>io.github.fontysvenlo.ais.businesslogic.api.BusinesslogicApi</exec.mainClass>
-    </properties>
 </project>

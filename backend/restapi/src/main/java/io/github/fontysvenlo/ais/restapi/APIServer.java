@@ -1,23 +1,26 @@
 package io.github.fontysvenlo.ais.restapi;
 
 import static io.javalin.apibuilder.ApiBuilder.crud;
-import static io.javalin.apibuilder.ApiBuilder.get;
 
-import io.github.fontysvenlo.ais.businesslogic.api.BusinessLogicAPI;
 import io.javalin.Javalin;
-
+import io.github.fontysvenlo.ais.businesslogic.api.BusinessLogic;
+import java.util.Map;
 
 /**
- * This class is responsible for starting the REST server and defining the routes.
+ * This class is responsible for starting the REST server and defining the
+ * routes.
  */
 public class APIServer {
-    private final BusinessLogicAPI businessLogic;
+
+    private final BusinessLogic businessLogic;
 
     /**
      * Initializes the REST API server
-     * @param businessLogic the business logic implementation to communicate with
+     *
+     * @param businessLogic the business logic implementation to communicate
+     * with
      */
-    public APIServer(BusinessLogicAPI businessLogic) {
+    public APIServer(BusinessLogic businessLogic) {
         this.businessLogic = businessLogic;
     }
 
@@ -34,8 +37,12 @@ public class APIServer {
                 });
             });
             config.router.apiBuilder(() -> {
-                crud("customers/{customer-id}", new CustomerController(businessLogic));
+                crud("customers/{customer-id}", new CustomerResource(businessLogic.getCustomerManager()));
             });
+        });
+
+        app.exception(IllegalArgumentException.class, (e, ctx) -> {
+            ctx.status(422).json(Map.of("error", e.getMessage()));
         });
 
         app.start(configuration.port());
