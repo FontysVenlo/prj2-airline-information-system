@@ -27,13 +27,13 @@ public class Assembler {
      * @param serverConfig the server configuration
      */
     public static void start(DBConfig dbConfig, ServerConfig serverConfig) {
-        
+
         Persistence persistence = PersistenceFactory.getInstance(dbConfig);
-        
+
         BusinessLogic businessLogic = BusinessLogicFactory.getInstance(persistence);
 
         APIServer restServer = new APIServer(businessLogic);
-        
+
         restServer.start(serverConfig);
     }
 
