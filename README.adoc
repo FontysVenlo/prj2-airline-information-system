@@ -5,6 +5,8 @@ endif::[]
 
 == Setup a layered architecture for your project
 
+This is the documentation for the backend, for the frontend see link:frontend/README.md[frontend]
+
 == Introduction
 
 This tutorial describes how to setup a layered architecture for your project.
