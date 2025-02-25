@@ -26,7 +26,6 @@ public class APIServer {
 
     /**
      * Starts the REST API server
-     *
      * @param configuration the configuration of the server
      */
     public void start(ServerConfig configuration) {
@@ -34,7 +33,7 @@ public class APIServer {
             config.router.contextPath = "/api/v1";
             config.bundledPlugins.enableCors(cors -> {
                 cors.addRule(it -> {
-                    it.allowHost("http://localhost:" + configuration.allowhostport(), "127.0.0.1:" + configuration.allowhostport());
+                    it.allowHost("http://localhost:" + configuration.cors(), "127.0.0.1:" + configuration.cors());
                 });
             });
             config.router.apiBuilder(() -> {
